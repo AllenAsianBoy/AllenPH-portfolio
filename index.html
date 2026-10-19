@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="strict-origin-when-cross-origin" name="referrer"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Allen's Portfolio — MEMORY ARCHIVE</title><style>
+:root{color-scheme:dark;--bg:#070c10;--panel:#252e34;--ink:#d9e9e4;--green:#94e6bd;--dim:#71978a;--warn:#efa86b}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 35%,#202d2f 0%,#0b1219 50%,#05080b 100%);color:var(--ink);font-family:Consolas,'Courier New',monospace;min-height:100svh}/* Subtle atmospheric grid: behind all UI, fades into the background. */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(to right,rgba(129,226,190,.095) 1px,transparent 1px),linear-gradient(to bottom,rgba(129,226,190,.095) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 78% 75% at 50% 49%,#000 10%,rgba(0,0,0,.55) 52%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 78% 75% at 50% 49%,#000 10%,rgba(0,0,0,.55) 52%,transparent 100%)}
+#intro,#home{position:relative;z-index:1}
+button{font:inherit;cursor:pointer}button:focus-visible,.card:focus-visible{outline:3px solid #efffc1;outline-offset:5px}.language{border-color:#80c9ab;color:#b9eed5}.top{position:fixed;z-index:10;top:20px;right:22px;display:flex;gap:12px}.plain{color:#b6c9c6;border:1px solid #52665f;border-radius:3px;background:#0e1719c9;padding:10px 14px}.plain:hover{background:#213530}.stage{max-width:1140px;margin:auto;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:75px 18px 35px}.scene{width:100%;position:relative;min-height:670px;display:flex;align-items:center;flex-direction:column;justify-content:center}.overline{font-size:11px;letter-spacing:.27em;color:#a4b4af;text-align:center;margin:0 0 18px}.machine{position:relative;width:min(760px,100%);background:linear-gradient(135deg,#4a5558,#242e34 13%,#1a2227 85%,#586364);border:6px solid #121a20;border-radius:30px 30px 23px 23px;box-shadow:0 25px 0 #111a1c,0 37px 65px #0009,inset 0 2px 1px #90a5a563;padding:29px 33px 35px;transform:perspective(1000px) rotateX(2deg);transition:transform .7s}.machine:before,.machine:after{content:'+';position:absolute;color:#718082;font-weight:700;font-size:24px;top:12px}.machine:before{left:16px}.machine:after{right:16px}.brandline{display:flex;align-items:center;justify-content:space-between;font-size:11px;letter-spacing:.12em;color:#c5ceca;margin-bottom:13px}.brand-glow{color:#9af7c8;text-shadow:0 0 8px #67f0af,0 0 18px #67f0af66,0 0 34px #67f0af33;letter-spacing:.14em}.brandline span:last-child{color:#889e9b}.monitor-bezel{border:12px solid #10181b;border-radius:19px 19px 24px 24px;box-shadow:inset 0 0 0 2px #445453,0 5px 12px #090e10;background:#060f11;padding:6px}.monitor{position:relative;overflow:hidden;min-height:250px;border-radius:13px 13px 19px 19px;border:1px solid #29534b;background:radial-gradient(ellipse at center,#14302a,#071612 70%,#04100d);box-shadow:inset 0 0 36px #000d,0 0 18px #2fb78c27;padding:25px clamp(14px,4vw,36px);color:var(--green);text-shadow:0 0 10px #7effc066}.monitor:after{pointer-events:none;content:'';position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 3px,#0003 4px 5px);opacity:.36}.screen-top{display:flex;justify-content:space-between;font-size:11px;color:#81b69f}.monitor h1{font-size:clamp(19px,3.5vw,32px);letter-spacing:.05em;margin:28px 0 4px}.monitor p{font-size:13px;color:#8bbca9}.log{margin-top:20px;display:grid;gap:7px;font-size:11px;color:#8cb5a4}.progress{height:6px;border:1px solid #385a51;border-radius:3px;overflow:hidden;margin-top:18px;background:#071510}.progress > div{height:100%;width:0%;background:#a9f2ca;box-shadow:0 0 12px #a9f2ca;transition:width .25s}.deck{display:grid;grid-template-columns:1fr 2.3fr 1fr;gap:15px;align-items:center;margin-top:22px}.lamps{display:flex;gap:10px}.lampbox{display:flex;flex-direction:column;align-items:center;gap:6px;color:#9caba7;font-size:9px}.lamp{width:12px;height:12px;border-radius:50%;background:#293434;border:1px solid #58605c}.lamp.on{background:var(--warn);box-shadow:0 0 14px var(--warn)}.lamp.ok{background:var(--green);box-shadow:0 0 14px var(--green)}.slotwrap{text-align:center}.slotlabel{font-size:11px;letter-spacing:.16em;color:#d2ddd8;margin-bottom:9px}.slot{position:relative;height:25px;background:#030708;border:5px solid #48575a;border-radius:5px;box-shadow:inset 0 2px 6px black,0 2px 2px #070c0f}.slot.target{border-color:#92e7c0;box-shadow:0 0 24px #6ae5b466,inset 0 1px 5px black}html[lang="zh-Hant"] .slot::after{content:"01 / 記憶卡輸入"}.slot::after{content:'01 / MEMORY INPUT';font-size:9px;color:#859692;position:absolute;left:50%;top:33px;transform:translateX(-50%);white-space:nowrap}.serial{text-align:right;font-size:10px;color:#93a49e;line-height:1.8}.card-area{position:relative;width:100%;height:156px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:17px}.card{touch-action:none;user-select:none;cursor:grab;position:relative;z-index:2;width:232px;max-width:calc(100vw - 44px);height:120px;border-radius:11px 11px 5px 5px;background:linear-gradient(130deg,#526068,#303b43 25%,#151e24 75%,#4e5656);border:3px solid #788781;box-shadow:0 18px 25px #000b, inset 0 0 0 6px #222d31;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:box-shadow .2s,filter .2s}.card:before{content:'';position:absolute;top:-8px;width:60%;height:7px;background:repeating-linear-gradient(to right,#d4b978 0 8px,#342b20 8px 12px);border-radius:3px}.card:hover,.card:focus-visible{filter:brightness(1.18);box-shadow:0 18px 30px #000b,0 0 24px #8fffd444}.card.dragging{cursor:grabbing;transition:none}.card strong{font-size:15px;letter-spacing:.04em}.card .card-portfolio-name{color:#a3ffd0;text-shadow:0 0 5px #67f0af,0 0 13px #67f0af99,0 0 22px #67f0af55;font-size:clamp(14px,2vw,18px);white-space:nowrap;max-width:calc(100% - 18px);letter-spacing:0;text-align:center}.card small{font-size:10px;color:#b5c8c2}.hint{text-align:center;letter-spacing:.1em;color:#a0c7b6;font-size:12px;min-height:20px}.footer{text-align:center;font-size:10px;color:#657b74;padding-top:8px}.home{width:min(1030px,100%);margin:auto;padding:70px 22px}.home header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #34544b;padding-bottom:18px;gap:15px}.home .wordmark{color:#9af7c8;letter-spacing:.14em;text-shadow:0 0 8px #67f0af,0 0 18px #67f0af66,0 0 34px #67f0af33}.home nav{display:flex;gap:18px;flex-wrap:wrap}.home nav a{color:#ccd7d1;text-decoration:none}.hero{padding:100px 0 70px;position:relative;isolation:isolate;text-align:center}.hero .tag{position:relative;z-index:1}.hero p{margin-left:auto;margin-right:auto}.hero .enterbutton{position:relative;z-index:1}.hero-sparkles{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}.hero-sparkles i{position:absolute;display:block;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.1;box-shadow:0 0 5px 1px #d9fff4;animation:slowTwinkle 7s ease-in-out infinite}.hero-sparkles i:nth-child(1){left:7%;top:14%;animation-delay:-1s}.hero-sparkles i:nth-child(2){left:19%;top:60%;animation-delay:-4s;width:2px;height:2px}.hero-sparkles i:nth-child(3){left:34%;top:8%;animation-delay:-2s}.hero-sparkles i:nth-child(4){left:67%;top:20%;animation-delay:-5s;width:2px;height:2px}.hero-sparkles i:nth-child(5){left:88%;top:37%;animation-delay:-3s}.hero-sparkles i:nth-child(6){left:75%;top:72%;animation-delay:-6s;width:2px;height:2px}.hero-sparkles i:nth-child(7){left:46%;top:84%;animation-delay:-2.7s}.hero-sparkles i:nth-child(8){left:95%;top:9%;animation-delay:-.5s;width:2px;height:2px}@keyframes slowTwinkle{0%,100%{opacity:.08;transform:scale(.75)}45%{opacity:.6;transform:scale(1.3)}65%{opacity:.18;transform:scale(.9)}}.hero .tag{color:#9ed8bd;letter-spacing:.14em;font-size:12px}.hero h2{position:relative;z-index:1;font-family:Rockwell,"Roboto Slab",Georgia,serif;font-size:clamp(20px,6vw,78px);font-weight:900;line-height:1.12;letter-spacing:.015em;margin:26px auto 30px;text-transform:uppercase;text-align:center;white-space:nowrap;color:#e8f4e9;-webkit-text-stroke:1px #b9e7cc;text-shadow:2px 3px 0 #19372b,4px 6px 0 #081a14,0 0 18px #7ae9b238;max-width:100%;overflow-wrap:normal}.hero p{max-width:590px;line-height:1.8;color:#a8bdb5}.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.tile{min-height:200px;border:1px solid #3c6054;background:linear-gradient(140deg,#1f3933,#0e1b1b);border-radius:7px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end}.tile:nth-child(2){background:linear-gradient(140deg,#3a3439,#19181e)}.tile:nth-child(3){background:linear-gradient(140deg,#333d43,#121b22)}.tile p{font-size:12px;color:#bbd0c3}.enterbutton{border:1px solid #8cdab5;background:#16271f;color:#c0f2d5;padding:13px 17px;margin-top:18px}/* Intro -> home: calm fade-out followed by rising title */
+#intro{opacity:1;transition:opacity .72s ease-in-out}
+#intro.intro-fading{opacity:0;pointer-events:none}
+#home{opacity:0;transition:opacity .55s ease}
+#home.home-visible{opacity:1}
+#home .hero h2{opacity:0;transform:translateY(58px);transition:opacity 1.05s ease,transform 1.05s cubic-bezier(.2,.75,.22,1)}
+#home.title-visible .hero h2{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){#intro,#home,#home .hero h2{transition:none!important;transform:none!important}}
+#home[hidden],#intro[hidden]{display:none!important}@media(max-width:700px){.scene{min-height:620px}.machine{padding:17px 15px 27px;border-radius:17px}.monitor-bezel{border-width:7px}.monitor{min-height:220px}.deck{grid-template-columns:1fr 1.7fr;gap:8px}.serial{display:none}.lamps{gap:4px}.slotlabel{font-size:9px}.card{width:200px;max-width:calc(100vw - 32px);height:108px}.projects{grid-template-columns:1fr}.top{right:12px;top:10px}.plain{padding:8px;font-size:11px}.hero{padding:75px 0 35px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* v0.6 — tactile insertion feedback */
+.brand-glow{font-size:14px;font-weight:800;color:#a4ffd0;text-shadow:0 0 5px #aaffd9,0 0 15px #42e99f,0 0 28px #42e99f99}
+.machine{transform-origin:50% 60%}.machine.impact{animation:machine-impact .28s cubic-bezier(.18,.8,.24,1)}
+@keyframes machine-impact{0%,100%{translate:0 0}24%{translate:0 4px}47%{translate:2px -2px}68%{translate:-1px 1px}}
+.slot{transition:border-color .16s,box-shadow .16s}.slot.target{border-color:#b2ffdc;box-shadow:0 0 9px #72ffc5,0 0 29px #49f7a780,inset 0 0 13px #79ffc761;animation:slot-breathe .75s ease-in-out infinite alternate}
+.slot.locked{animation:none;border-color:#a3ffd2;box-shadow:0 0 18px #6dffb2,0 0 40px #67ffad99,inset 0 0 16px #59df91}
+@keyframes slot-breathe{to{box-shadow:0 0 15px #a0ffdc,0 0 42px #49f7a7a6,inset 0 0 20px #79ffc780}}
+.card.magnetic{filter:brightness(1.22);box-shadow:0 15px 24px #000a,0 0 26px #72ffd28a;border-color:#b4ffe0}
+.monitor.flash{animation:crt-flash .48s ease-out}.monitor.flash:before{content:'';position:absolute;inset:0;z-index:3;background:#c7ffe2;pointer-events:none;animation:flash-overlay .48s ease-out forwards}
+@keyframes crt-flash{0%{filter:brightness(1)}12%{filter:brightness(2.6)}35%{filter:brightness(.35)}57%{filter:brightness(1.8)}100%{filter:brightness(1)}}
+@keyframes flash-overlay{0%{opacity:.6}18%{opacity:0}31%{opacity:.12}100%{opacity:0}}
+.lamp.pulse{animation:lamp-pulse .45s ease-in-out 3}@keyframes lamp-pulse{50%{filter:brightness(2.2);transform:scale(1.2)}}
+@media(prefers-reduced-motion:reduce){.machine.impact,.monitor.flash,.lamp.pulse,.slot.target{animation:none!important}}
+
+/* v1.4 — Hybrid project gallery */
+.archive-gallery{position:relative;padding:26px 0 90px;scroll-margin-top:35px}.gallery-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:23px}.gallery-kicker{color:#9ad4b4;font-size:11px;letter-spacing:.18em;margin:0 0 12px}.gallery-heading h3{font-family:Georgia,'Times New Roman',serif;font-size:clamp(28px,4vw,48px);line-height:1.2;margin:0;color:#d7eee2}.gallery-index{font-size:11px;letter-spacing:.13em;color:#80a08e;white-space:nowrap}.featured-work{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);min-height:365px;overflow:hidden;border:1px solid #416452;background:#0c1818;border-radius:12px}.featured-art{position:relative;min-height:355px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 52% 50%,#2a5547 0%,#162e2a 35%,#0a1419 72%)}.featured-art:before,.gallery-card-art:before{content:'';position:absolute;inset:0;background-image:linear-gradient(#9cdbbc13 1px,transparent 1px),linear-gradient(90deg,#9cdbbc13 1px,transparent 1px);background-size:36px 36px;mask-image:linear-gradient(to bottom,transparent,#000 40%,#000 70%,transparent);pointer-events:none}.demo-object{width:185px;height:185px;border:1px solid #91f0b6;border-radius:31% 69% 70% 30% / 30% 34% 66% 70%;display:grid;place-items:center;transform:rotate(-19deg);box-shadow:0 0 42px #57dca735,inset 0 0 36px #65e4a82a;position:relative}.demo-object span{font-family:Georgia,serif;font-size:74px;color:#b4fbd4;transform:rotate(19deg);text-shadow:0 0 30px #75ffb3}.demo-ring{position:absolute;inset:27px;border-radius:50%;border:1px solid #84f3bc75}.art-corner,.art-bottom{position:absolute;font-size:10px;letter-spacing:.15em;color:#abd1bd}.art-corner{top:23px;left:25px}.art-bottom{bottom:21px;right:23px}.featured-copy{padding:clamp(24px,4vw,48px);display:flex;flex-direction:column;justify-content:center;align-items:start}.work-type{color:#a6edc7;letter-spacing:.13em;font-size:10px}.featured-copy h4{margin:17px 0 13px;font-size:clamp(26px,3vw,37px);color:#eef9ef}.featured-copy p{line-height:1.9;color:#a6bdb0;margin:0 0 25px}.work-tags{display:flex;flex-wrap:wrap;gap:7px}.work-tags span{border:1px solid #386250;padding:7px;font-size:9px;letter-spacing:.06em;color:#bbdac7}.gallery-link{margin-top:28px;color:#b9ffd6;text-decoration:none;border-bottom:1px solid #7ace9f;padding-bottom:7px;font-size:12px}.gallery-link:hover{color:#fff}.gallery-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin:53px 0 19px}.gallery-label{display:flex;align-items:baseline;gap:14px}.gallery-label h4{font-size:15px;letter-spacing:.1em;margin:0;color:#e0f4e6}.gallery-label span{color:#77a78e;font-size:10px}.gallery-filters{display:flex;gap:7px;flex-wrap:wrap}.filter-btn{border:1px solid #37594c;background:#101d1c;color:#a4bbac;padding:9px 12px;border-radius:4px;font-size:11px;transition:background .2s,color .2s,border-color .2s}.filter-btn:hover,.filter-btn.active{color:#08150d;background:#a4ecc0;border-color:#a4ecc0}.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.gallery-card{min-width:0;border:1px solid #355044;border-radius:9px;background:#101b1b;overflow:hidden;transition:transform .25s,border-color .25s}.gallery-card:hover{transform:translateY(-5px);border-color:#83cdaa}.gallery-card:focus-visible{outline:2px solid #a4ecc0;outline-offset:4px}.gallery-card[hidden]{display:none!important}.gallery-card-art{height:210px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle,#28453c,#111f21 74%)}.model-art{background:radial-gradient(circle,#3a4053,#111b25 74%)}.tech-art{background:radial-gradient(circle,#30433e,#111b20 74%)}.card-art-symbol{color:#abe7cb;font-family:Georgia,serif;font-size:100px;font-weight:normal;text-shadow:0 0 28px #6eecab55;transition:transform .3s}.gallery-card:hover .card-art-symbol{transform:scale(1.12) rotate(6deg)}.card-numeral{position:absolute;left:16px;bottom:16px;color:#a0bbab;font-size:10px;letter-spacing:.15em}.gallery-card-meta{display:flex;justify-content:space-between;gap:8px;margin:19px 17px 10px;color:#88b9a2;font-size:10px;letter-spacing:.06em}.gallery-card h4{font-size:17px;margin:0 17px 7px;color:#e0f3e7}.gallery-card p{font-size:12px;line-height:1.8;margin:0 17px 22px;color:#9eb6a8}.gallery-note{color:#739887;font-size:11px;margin:23px 0 0;line-height:1.7}@media(max-width:760px){.featured-work{grid-template-columns:1fr}.featured-art{min-height:275px}.featured-copy{padding:27px}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-card-art{height:170px}}@media(max-width:500px){.gallery-heading{align-items:start}.gallery-index{font-size:9px}.gallery-grid{grid-template-columns:1fr}.gallery-card-art{height:220px}.gallery-toolbar{margin-top:38px}.filter-btn{padding:8px}}
+
+/* v1.5: project-first portfolio */
+.mtm-feature{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,1fr);padding:0;text-decoration:none;color:inherit;overflow:hidden;cursor:pointer;transition:border-color .3s,transform .35s;background:#0e1b17}
+.mtm-feature:hover{border-color:#a4e5b7;transform:translateY(-3px)}
+.mtm-cover{position:relative;min-width:0;min-height:330px;overflow:hidden;background:#15211c}.mtm-cover img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;filter:grayscale(1);transition:transform .7s,filter .55s ease}.mtm-feature:hover .mtm-cover img,.mtm-feature:focus-visible .mtm-cover img,.mtm-feature:focus-within .mtm-cover img{transform:scale(1.04);filter:grayscale(0)}.mtm-cover-label{position:absolute;left:20px;bottom:18px;background:#081511dc;padding:8px 11px;border:1px solid #78977c;color:#d9f5df;font-size:11px;letter-spacing:.14em}.mtm-feature .featured-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.mtm-feature .featured-copy h4{font-size:clamp(28px,3vw,40px);line-height:1.25;margin:15px 0 0}.mtm-english{font-size:17px!important;color:#e9e5d8!important;margin:7px 0 22px!important}.mtm-feature .gallery-link{margin-top:24px}.mtm-next{margin:24px 0 56px;padding:20px;border:1px dashed #365749;color:#9eb8a9;font-size:13px}
+.project-detail{padding:50px 0 75px;border-top:1px solid #314739}.project-detail[hidden]{display:none!important}.detail-top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#89ae96;font-size:12px;letter-spacing:.08em}.detail-top a,.detail-back-bottom{color:#b7e9c8;text-decoration:none}.detail-top a:hover,.detail-back-bottom:hover{text-decoration:underline}.detail-head{text-align:center;padding:55px 0 45px}.detail-head h2{font-family:Georgia,'Noto Serif TC',serif;font-size:clamp(38px,7vw,80px);margin:12px auto 5px;letter-spacing:.05em;line-height:1.2}.detail-en{font-family:Georgia,serif;font-style:italic;color:#c6d2c3;font-size:clamp(20px,3.5vw,36px);margin:0}.detail-role{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:30px}.detail-role span{border:1px solid #3c6652;padding:9px 13px;color:#bfe7ca;font-size:12px}.detail-cover,.mtm-image-grid figure{margin:0}.detail-cover img{width:100%;display:block;border-radius:5px}.detail-cover figcaption,.mtm-image-grid figcaption{padding:10px 3px;color:#a6b7a9;font-size:12px}.detail-info{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:24px;margin:30px 0 22px;align-items:start;border:1px solid #355645;background:#10221b;border-radius:8px}.detail-info h3{font-size:clamp(20px,3vw,30px);font-weight:500;margin:12px 0}.detail-info p{line-height:1.9;color:#aec4b5;font-size:15px;margin:0}.detail-small,.detail-section-heading{color:#a7d5b3;font-size:12px;letter-spacing:.1em}.detail-section-heading{display:flex;justify-content:space-between;border-bottom:1px solid #385647;padding-bottom:14px;margin-bottom:20px}.mtm-image-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 18px}.mtm-image-grid .wide{grid-column:1/-1}.mtm-image-grid img{width:100%;height:auto;display:block;border-radius:4px}.detail-back-bottom{display:inline-block;margin-top:52px;font-size:14px}
+@media(max-width:760px){.mtm-feature{grid-template-columns:1fr}.mtm-cover{min-height:0;aspect-ratio:16/10}.detail-info{grid-template-columns:1fr;gap:14px;padding:17px}.detail-head{padding:38px 0}.mtm-image-grid{grid-template-columns:1fr}.mtm-image-grid .wide{grid-column:auto}.detail-top{font-size:10px}}
+
+/* v1.6: video and production credits */
+.project-video{margin:38px 0 30px}.project-video .detail-section-heading{margin-bottom:14px}.video-shell{position:relative;aspect-ratio:16 / 9;width:100%;overflow:hidden;border-radius:9px;border:1px solid #426552;background:#050c0a}.video-shell iframe{width:100%;height:100%;border:0;display:block}.video-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}.video-actions a{color:#b7e9c8;font-size:13px}.production-details{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:22px 0 32px;padding:24px;border:1px solid #355645;background:#10221b;border-radius:8px}.production-details h3{font-size:clamp(15px,2vw,21px);line-height:1.5;margin:9px 0;color:#e1f4e7}.production-details .detail-small{font-size:11px;letter-spacing:.12em;color:#90b69d}.tools-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tools-list span{border:1px solid #496755;background:#172b22;border-radius:3px;padding:7px 10px;font-size:12px;color:#cce8d3}@media(max-width:720px){.production-details{grid-template-columns:1fr;padding:17px}}
+
+/* Project detail displays without the homepage hero banner. */
+#home.project-open .hero{display:none!important}
+
+.video-poster{position:relative;width:100%;height:100%;display:block;border:0;cursor:pointer;background:#101915;padding:0;color:#fff;font:inherit}.video-poster>img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.58)}.video-poster:hover>img{filter:brightness(.73)}.video-poster-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:13px;font-weight:bold;text-shadow:0 2px 8px #000}.video-play-icon{width:70px;height:70px;display:grid;place-items:center;border-radius:50%;background:#e52531;font-size:26px;padding-left:5px;box-shadow:0 0 25px #0009}.video-local-notice{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px;text-align:center;background:linear-gradient(130deg,#08120fea,#13241ff5)}.video-local-notice p{margin:0;max-width:550px;line-height:1.7;color:#d6e7dc}.video-local-notice a{color:#b9f7d0;border:1px solid #76b691;padding:10px 16px;text-decoration:none}.video-poster:focus-visible{outline:3px solid #b7fad2;outline-offset:-5px}
+
+/* Project chapters — content-first, bilingual, responsive */
+.project-subnav{display:flex;gap:10px;flex-wrap:wrap;margin:38px 0 16px;padding:14px 0;border-top:1px solid #36584b;border-bottom:1px solid #36584b}
+.project-subnav a{color:#b7e8cf;border:1px solid #375c4d;border-radius:4px;text-decoration:none;padding:10px 15px;font-size:13px;transition:background .2s,border-color .2s}
+.project-subnav a:hover,.project-subnav a:focus-visible{background:#19362b;border-color:#8dcbaa}
+.project-chapter{scroll-margin-top:26px}
+
+.project-chapter{margin:42px 0 62px;scroll-margin-top:24px}
+.project-empty{display:flex;align-items:center;gap:25px;min-height:185px;padding:28px; border:1px dashed #456458;border-radius:8px;background:linear-gradient(130deg,#10221da8,#121b20a0)}
+.project-empty-symbol{font-size:38px;color:#8ac2a5;opacity:.6;flex:none}
+.project-empty h3{font-size:19px;margin:0 0 10px;color:#cce7d8}
+.project-empty p{font-size:14px;line-height:1.9;margin:0;color:#a1bbae;max-width:720px}
+@media(max-width:600px){.project-subnav a{flex:1 1 auto;text-align:center}.project-empty{gap:12px;padding:20px}.project-empty-symbol{font-size:24px}}
+
+/* v2.0 - original concept art gallery */
+.concept-gallery{display:grid;gap:36px}.concept-group-label{font-family:system-ui,sans-serif;font-weight:600;font-size:clamp(17px,2.3vw,23px);margin:0;color:#d8eade}.concept-group-code{color:#87b39c;font-size:10px;letter-spacing:.13em;margin:7px 0 17px}.concept-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.concept-grid figure{margin:0;min-width:0}.concept-grid a{display:block;background:#ddd9cd;border:1px solid #354c42;border-radius:5px;overflow:hidden}.concept-grid img{width:100%;height:100%;max-height:430px;aspect-ratio:16/10;object-fit:contain;display:block;transition:transform .25s}.concept-grid a:hover img{transform:scale(1.015)}.concept-grid figcaption{font-size:12px;color:#a5bfac;margin:9px 2px 0}.concept-grid figure.wide{grid-column:1 / -1}.concept-grid figure.wide a{background:transparent;border:0;border-radius:0}.concept-grid figure.wide img{height:auto;max-height:none;aspect-ratio:auto;object-fit:contain}@media(max-width:620px){.concept-grid{grid-template-columns:1fr}.concept-grid figure.wide{grid-column:auto}}
+
+.process-copy{margin:0 0 18px;color:#9db7ac;line-height:1.8;max-width:860px}.process-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.process-gallery figure{margin:0;min-width:0}.process-gallery a{display:block;background:#d4d4d0;border:1px solid #354c42;border-radius:5px;overflow:hidden}.process-gallery img{width:100%;height:100%;max-height:430px;aspect-ratio:4/3;object-fit:contain;display:block;transition:transform .25s}.process-gallery a:hover img{transform:scale(1.015)}.process-gallery figcaption{font-size:12px;color:#a5bfac;margin:9px 2px 0;line-height:1.6}.process-gallery .wide{grid-column:1 / -1}.process-gallery .wide img{max-height:520px;aspect-ratio:16/9}@media(max-width:720px){.process-gallery{grid-template-columns:1fr}.process-gallery .wide{grid-column:auto}}
+
+/* v2.5 — process images share the full-width rendering gallery style. */
+.process-gallery{display:grid;grid-template-columns:minmax(0,1fr);gap:26px}
+.process-gallery figure,.process-gallery .wide{grid-column:1/-1;margin:0;min-width:0}
+.process-gallery a{display:block;background:transparent;border:0;border-radius:0;overflow:visible}
+.process-gallery img,.process-gallery .wide img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;border-radius:4px;transition:filter .2s ease}
+.process-gallery a:hover img{transform:none;filter:brightness(1.06)}
+.process-gallery figcaption{padding:10px 3px;margin:0;color:#a6b7a9;font-size:12px;line-height:1.6}
+@media(max-width:720px){.process-gallery{grid-template-columns:minmax(0,1fr)}.process-gallery .wide{grid-column:1/-1}}
+.production-details.software-only{display:block}.production-details.software-only>div{width:100%}
+
+/* PROJECT 002: same visual template, no borrowed project content */
+.project-two-card{display:block;margin-top:22px;border:1px solid #3c6054;background:#0d1e19;border-radius:7px;overflow:hidden;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}.project-two-card:hover{border-color:#93d7b3;transform:translateY(-3px)}.project-two-cover{min-height:245px;display:grid;place-items:center;gap:8px;background:linear-gradient(145deg,#18332a,#0a1215);color:#8eb9a1;text-align:center;padding:24px}.project-two-cover strong{display:block;color:#d4ebdd;font-size:clamp(22px,3vw,32px)}.project-two-card .featured-copy{padding:22px}.project-two-placeholder{min-height:220px;display:grid;place-items:center;border:1px dashed #496b59;border-radius:5px;background:linear-gradient(145deg,#10241d,#0b1618);color:#8cae9a;padding:25px;text-align:center;line-height:1.9}.project-two-detail .detail-role{margin-top:28px}.project-two-detail .detail-info{background:#10221b;border:1px solid #355645;border-radius:8px;padding:25px;margin:0 0 25px}.project-two-detail .production-details{margin-top:20px}.project-two-detail .project-chapter{margin-top:50px}.project-card-secondary{margin-top:22px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}.project-card-secondary:hover{border-color:#93d7b3;transform:translateY(-3px)}
+.project-two-cover.has-image{min-height:0;padding:0;position:relative;display:block}.project-two-cover.has-image img{display:block;width:100%;height:auto;aspect-ratio:16/8;object-fit:cover}.project-two-cover.has-image .mtm-cover-label{position:absolute;left:16px;top:16px}.robot-stills figure a{display:block}.robot-stills figure img{width:100%;height:auto;object-fit:contain}.robot-stills{grid-template-columns:repeat(2,minmax(0,1fr))}.robot-stills figure.wide{grid-column:auto}.robot-stills figure a{background:#000}.robot-stills figure img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain}
+
+/* Project 002 — character models */
+.character-group{margin:26px 0 42px}.character-group>h3{color:#d8eade;font:600 clamp(19px,2.5vw,26px) system-ui,sans-serif;margin:0 0 8px}.character-note{color:#9fb8a9;line-height:1.8;margin:0 0 22px}.character-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.character-grid figure{margin:0;min-width:0}.character-grid figure.wide{grid-column:1/-1}.character-grid a{display:block}.character-grid img{width:100%;height:auto;display:block;border-radius:4px}.character-grid figcaption{padding:10px 2px;color:#a6b7a9;font-size:12px}.character-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.character-video-grid figure{margin:0;min-width:0}.character-video-grid video{display:block;width:100%;height:100%;aspect-ratio:1/1;object-fit:contain;background:#0a0e11;border:1px solid #355747;border-radius:5px}.character-video-grid figcaption{margin-top:10px;color:#a6b7a9;font-size:12px}.character-video-grid .media-frame{display:block;width:100%;aspect-ratio:1/1;overflow:hidden;background:#0a0e11;border:1px solid #355747;border-radius:5px}.character-video-grid .media-frame img{display:block;width:100%;height:100%;object-fit:contain;background:#0a0e11}.character-upcoming{border:1px solid #355747;background:#10231c;padding:30px 24px;border-radius:6px;color:#a9c4b4}@media(max-width:650px){.character-grid,.character-video-grid{grid-template-columns:1fr}.character-grid figure.wide{grid-column:auto}}
+
+/* PROJECT 002 MY ROLE follows PROJECT 001 typography and two-column layout. */
+#project-002 .detail-info h3{font-size:clamp(20px,3vw,30px);font-weight:500;letter-spacing:normal;white-space:normal;margin:12px 0}
+@media(max-width:720px){#project-002 .detail-info h3{font-size:clamp(20px,3vw,30px)}}
+
+/* v3.8: original letterboxed stills in two columns and uncropped 1:1 video viewers */
+#project-002 .robot-stills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}#project-002 .robot-stills figure,#project-002 .robot-stills figure.wide{grid-column:auto;min-width:0}#project-002 .robot-stills img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;background:#000}#project-002 .character-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}#project-002 .character-video-grid video{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#0a0e11}@media(max-width:520px){#project-002 .robot-stills,#project-002 .character-video-grid{gap:9px}}
+#project-002 .robot-new-gallery{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}#project-002 .robot-new-gallery figure.wide{grid-column:1/-1}#project-002 .robot-new-gallery img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;background:transparent}
+/* PROJECT 002 / game prototype: wide uncropped gameplay video with an always-visible poster */
+#project-002 .gameplay-video{margin:20px 0 0}
+#project-002 .gameplay-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#080d10;border:1px solid #355747;border-radius:7px}
+#project-002 .gameplay-video figcaption{margin-top:11px;color:#a6b7a9;font-size:12px}
+
+/* v5.4 / Minimal slow atmospheric points across all pages. */
+
+/* Ambient particles: behind content, subtly glowing and repelled by the pointer. */
+.ambient-lights{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;isolation:isolate}
+.ambient-lights .ambient-light{
+  position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);
+  border-radius:50%;background:#e6fff6;
+  box-shadow:0 0 7px 1px rgba(220,255,244,.74),0 0 19px 4px rgba(108,224,169,.27);
+  opacity:.12;translate:var(--push-x,0px) var(--push-y,0px);
+  animation:ambient-breathe var(--d) ease-in-out var(--delay) infinite;
+  will-change:opacity,transform,translate;
+}
+.ambient-lights .ambient-light:nth-child(5n){
+  background:#e8f5ff;
+  box-shadow:0 0 8px 1px rgba(222,242,255,.7),0 0 19px 3px rgba(140,197,246,.23);
+}
+@keyframes ambient-breathe{
+  0%,100%{opacity:.10;transform:scale(.78)}
+  42%{opacity:var(--peak,.52);transform:scale(1.18)}
+  65%{opacity:.20;transform:scale(.94)}
+}
+@media(max-width:760px){
+  .ambient-lights .ambient-light:nth-child(n+21){display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .ambient-lights .ambient-light{animation:none;opacity:.23;translate:0px 0px;will-change:auto}
+}
+
+
+/* PROJECT 003: restrained cover placeholder until authentic artwork is supplied */
+.idol-cover-placeholder{min-height:330px;background:radial-gradient(ellipse at 45% 45%,#18382e 0%,#0a1717 65%,#071014 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;border-right:1px solid #305347;text-align:center}
+.idol-placeholder-title{font:700 clamp(28px,4vw,58px) Georgia,serif;letter-spacing:.12em;color:#c5e6d1;text-shadow:0 0 26px #4b9e7150}
+.idol-placeholder-sub{font-size:12px;letter-spacing:.16em;color:#89b19e}
+.idol-keyvisual-placeholder{height:260px;display:grid;place-items:center;border:1px dashed #416957;background:linear-gradient(135deg,#0e241d,#071219);border-radius:6px;color:#8cad9d;margin:18px 0 30px}
+@media(max-width:700px){.idol-cover-placeholder{min-height:250px}.idol-keyvisual-placeholder{height:190px}}
+
+/* v5.6 Project 003 media layout */
+#project-003 .idol-video{margin:16px 0 24px}#project-003 .idol-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#000;border:1px solid #355747;border-radius:5px}#project-003 .idol-stills{display:grid;grid-template-columns:minmax(0,1fr);gap:26px}#project-003 .idol-gallery-image{margin:0;min-width:0}#project-003 .idol-gallery-image img{display:block;width:100%;height:auto;object-fit:contain;border-radius:5px}#project-003 .idol-gallery-image figcaption{padding:9px 2px;color:#a6b7a9;font-size:12px}#project-003 .idol-link a{color:#b7e9c8}#project-003 .project-chapter>h3{margin:28px 0 12px;color:#d8eade}
+#project-003 .idol-process-intro{margin:23px 0 28px;padding:22px 26px;border-left:2px solid #81b69b;background:linear-gradient(90deg,rgba(21,48,37,.66),rgba(10,25,24,.12));border-radius:0 7px 7px 0}#project-003 .idol-process-intro h3{margin:0 0 12px;color:#e2f2e8;font-size:clamp(20px,2.4vw,27px);line-height:1.35}#project-003 .idol-process-intro p{margin:0;color:#b5c8bd;font-size:14px;line-height:1.95;max-width:790px}
+
+/* v6.1 - explicit bilingual language selector */
+.language-switch{display:flex;align-items:center;gap:3px;border:1px solid #527c69;border-radius:5px;background:#0e1719e8;padding:3px;white-space:nowrap}.lang-choice{border:0;background:transparent;color:#91aa9e;padding:7px 10px;border-radius:3px;font:inherit;font-size:12px;cursor:pointer;transition:background .2s,color .2s}.lang-choice.active{background:#22503b;color:#d5ffe8;box-shadow:0 0 9px #80f7ba19}.lang-choice:hover{color:#f3fff8}.lang-choice:focus-visible{outline:2px solid #c1f5d7;outline-offset:2px}.lang-divider{font-size:12px;color:#577864}@media(max-width:500px){.top{gap:6px;flex-wrap:wrap;justify-content:flex-end}.lang-choice{padding:7px 6px;font-size:11px}}
+
+/* PROJECT 003 / SECTION 02: images 01–04 in two columns, 05 full width. */
+#project-003-stills .idol-process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 18px}
+#project-003-stills .idol-process-grid .idol-process-wide{grid-column:1/-1}
+#project-003-stills .idol-process-grid .idol-gallery-image{min-width:0;margin:0}
+#project-003-stills .idol-process-grid .idol-gallery-image img{width:100%;height:auto;display:block;object-fit:contain}
+#project-003-stills .idol-process-grid figcaption{padding:11px 2px 0;line-height:1.6}
+@media(max-width:620px){#project-003-stills .idol-process-grid{grid-template-columns:1fr;gap:20px}}
+
+/* Creator profile / contact links */
+.creator-profile{padding:70px 0 90px;line-height:1.8}
+.creator-profile .tag{color:#9ed8bd;font-size:12px;letter-spacing:.12em}
+.creator-profile h2{font-size:clamp(25px,3vw,36px);margin:12px 0 8px;color:#e8f4e9}
+.creator-profile-intro{color:#a8bdb5;margin:0 0 24px}
+.creator-contact-list{display:grid;gap:10px;max-width:740px;margin-bottom:30px}
+.creator-contact-list a{display:grid;grid-template-columns:110px minmax(0,1fr) 18px;gap:12px;align-items:center;padding:16px 19px;border:1px solid #365a49;border-radius:8px;background:#0e1c18;color:#dbf4e4;text-decoration:none;transition:background .25s,border-color .25s,transform .25s}
+.creator-contact-list a:hover,.creator-contact-list a:focus-visible{background:#152e23;border-color:#8ed7af;transform:translateY(-2px)}
+.creator-contact-list a>span:first-child{font-size:11px;letter-spacing:.12em;color:#9ed8bd}
+.creator-contact-list strong{font-weight:500;overflow-wrap:anywhere}
+@media(max-width:580px){.creator-contact-list a{grid-template-columns:1fr 18px;gap:2px 8px}.creator-contact-list a>span:first-child{grid-column:1}.creator-contact-list strong{grid-column:1}.creator-contact-list a>span:last-child{grid-column:2;grid-row:1 / 3}}
+
+/* Skills archive — consistent category / tool / PNG fallback hierarchy */
+
+.creator-contact-after-skills{margin-top:44px;padding-top:30px;border-top:1px solid #355446}
+.creator-skills{margin:40px 0 35px;padding-top:29px;border-top:1px solid #355446}
+.skills-kicker{font-size:10px;letter-spacing:.19em;color:#90c9ac}
+.skills-heading h3{color:#e7f4e8;font-size:clamp(24px,3vw,32px);margin:10px 0 9px}
+.skills-heading p{font-size:13px;color:#a5bfb0;line-height:1.9;max-width:750px;margin:0 0 24px}
+.skill-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.skill-category{min-width:0;border:1px solid #355648;border-radius:10px;background:#0d201abb;padding:20px 19px 19px}
+.skill-category-heading{display:flex;gap:12px;align-items:flex-start;min-height:54px}
+.skill-category-heading>span{font-size:12px;letter-spacing:.12em;color:#80af94;font-family:monospace;padding-top:3px}
+.skill-category-heading h4{color:#e6f4e9;font-size:18px;margin:0 0 4px}
+.skill-category-heading small{font-size:9px;letter-spacing:.15em;color:#789f8b}
+.skill-items{display:flex;flex-wrap:wrap;gap:14px;margin-top:19px}
+.skill-item{width:95px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;color:#b9cfc1;font-size:10px;line-height:1.35;letter-spacing:.025em}
+.skill-icon{display:flex;align-items:center;justify-content:center;width:76px;height:76px;border-radius:15px;border:1px solid #3c5549;background:#15251e;transition:border-color .28s,transform .28s,box-shadow .28s}
+.skill-icon img{width:59px;height:59px;object-fit:contain}
+.skill-icon.icon-contrast{background:#1d2f27;border-color:#527264;box-shadow:inset 0 0 0 1px #2f463c,0 0 18px rgba(115,183,146,.08)}
+.skill-item:hover .skill-icon.icon-contrast{border-color:#9adbb7;box-shadow:inset 0 0 0 1px #395447,0 5px 22px #54bc8340}
+.skill-item:hover .skill-icon{transform:translateY(-4px);border-color:#8bcda9;box-shadow:0 5px 22px #54bc8340}
+.skill-footnote{font-size:11px;color:#789a87;margin:19px 0 0}
+@media(max-width:700px){.skill-groups{grid-template-columns:1fr}.skill-items{gap:12px}.skill-item{width:86px}.skill-icon{width:70px;height:70px}.skill-icon img{width:55px;height:55px}}
+@media(prefers-reduced-motion:reduce){.skill-icon{transition:none}.skill-item:hover .skill-icon{transform:none}}
+.idol-clip-heading{margin:44px 0 16px;font-size:clamp(18px,2.4vw,23px);font-weight:700;color:#e2f3e8}.idol-video figcaption{margin-top:10px;font-size:12px;color:#a2bcb0}
+
+/* Creator bio portrait + narrative; skills and contacts retain their existing order. */
+.creator-about-layout{display:grid;grid-template-columns:minmax(210px, .72fr) minmax(0,1.55fr);gap:clamp(26px,5vw,58px);align-items:center;padding:18px 0 36px}
+.creator-about-portrait{margin:0;padding:14px;border:1px solid #3e6856;border-radius:13px;background:linear-gradient(145deg,#172d25,#0e1a17);box-shadow:0 0 26px #80d6aa0c}
+.creator-about-portrait img{display:block;width:100%;height:auto;aspect-ratio:1 / 1;object-fit:cover;background:#f7f7f5;border-radius:7px}
+.creator-about-portrait figcaption{font-size:9px;letter-spacing:.14em;color:#91bea5;padding:13px 2px 2px}
+.creator-about-copy .tag{color:#8ccfab;letter-spacing:.15em;font-size:11px}
+.creator-about-copy h2{font-size:clamp(33px,4vw,48px);margin:10px 0 5px;color:#e5f5e9}
+.creator-about-role{color:#a5e1bd!important;font-size:13px!important;letter-spacing:.05em;margin-bottom:22px!important}
+.creator-about-role span{color:#5f8e77;margin:0 4px}
+.creator-about-copy p:not(.tag):not(.creator-about-role){color:#b9cfc1;line-height:1.95;font-size:14px;margin:0 0 14px}
+@media(max-width:720px){.creator-about-layout{grid-template-columns:1fr;gap:22px}.creator-about-portrait{width:min(310px,100%);margin-inline:auto}.creator-about-copy h2{font-size:36px}}
+
+/* Identical MV headings, typography and spacing for Quinn and Theo */
+#project-003 .project-chapter .mv-title{font-family:inherit;font-size:clamp(19px,2.4vw,23px);font-weight:700;line-height:1.45;letter-spacing:.015em;color:#e2f3e8;margin:32px 0 14px}
+#project-003 .idol-link{margin:13px 0 30px}
+
+/* v7.6: Homepage-only creator information; shared contact footer on every project page. */
+#home.project-open #about{display:none!important}
+#project-contact{margin:66px 0 75px;padding:29px 0 0;border-top:1px solid #355446}
+#project-contact[hidden]{display:none!important}
+#project-contact h2{font-size:clamp(25px,3.1vw,34px);color:#e7f4e8;margin:11px 0}
+#project-contact .creator-contact-list{margin-top:23px}
+
+/* PROJECT PAGES: edge-reveal return arrow. */
+.edge-home{position:fixed;z-index:45;left:13px;top:50%;transform:translate(-13px,-50%);display:flex;align-items:center;justify-content:center;gap:8px;min-width:53px;min-height:56px;padding:9px 13px;border:1px solid #77b395;border-radius:0 10px 10px 0;background:rgba(10,29,24,.95);color:#d9f8e6;text-decoration:none;font:600 14px/1.2 inherit;box-shadow:0 0 22px #5ceb9d20;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,transform .3s ease,visibility .3s ease}
+.edge-home svg{flex:none;width:26px;height:26px;stroke:currentColor}
+.edge-home.is-visible,.edge-home:focus-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translate(0,-50%)}
+.edge-home:hover{background:rgba(23,59,45,.98);border-color:#b9efcb;box-shadow:0 0 28px #5ceb9d40}
+.edge-home:focus-visible{outline:2px solid #bef6ce;outline-offset:3px}
+.edge-home[hidden]{display:none!important}
+@media (hover:none){.edge-home{left:0;top:auto;bottom:24px;transform:translateX(-12px);min-height:48px;min-width:48px;padding:9px;opacity:.85;visibility:visible;pointer-events:auto}.edge-home.is-visible{transform:translateX(0);opacity:.9}.edge-home span{display:none}}
+@media(prefers-reduced-motion:reduce){.edge-home{transition:none}}
+
+/* v8.4 — minimal reference-inspired portfolio navigation */
+.site-header{display:none;position:fixed;inset:0 0 auto;z-index:50;height:65px;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 26px;background:rgba(8,20,19,.68);border-bottom:1px solid rgba(143,194,163,.2);backdrop-filter:blur(12px)}
+body.site-ready .site-header{display:grid}
+.menu-toggle{display:flex;align-items:center;gap:12px;justify-self:start;border:0;background:transparent;color:#d5e9dd;padding:12px 9px;letter-spacing:.12em;font-size:12px}
+.menu-toggle .menu-bars{width:23px;display:grid;gap:5px}
+.menu-toggle .menu-bars i{display:block;height:1px;background:#c4e7d2;width:23px;transition:transform .25s}
+.menu-toggle[aria-expanded="true"] .menu-bars i:first-child{transform:translateY(3px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] .menu-bars i:last-child{transform:translateY(-3px) rotate(-45deg)}
+.site-brand{justify-self:center;font-family:Georgia,serif;font-weight:700;font-size:clamp(15px,2vw,21px);letter-spacing:.015em;color:#b9f3d6;text-decoration:none;text-shadow:0 0 12px rgba(112,242,180,.3);white-space:nowrap}
+.site-header .header-lang{justify-self:end;display:flex;align-items:center;gap:8px}
+.site-header .header-lang .language-switch{position:static;background:rgba(13,29,25,.5);border-color:#4f8268}
+body.site-ready .top{display:none}
+body.site-ready .home{padding-top:100px}#projects,#about,#creator-skills,#home-contact{scroll-margin-top:95px}
+body.site-ready .project-detail{scroll-margin-top:95px}
+.site-menu{display:none;position:fixed;z-index:49;top:65px;left:0;width:min(340px,100vw);max-height:calc(100dvh - 65px);overflow-y:auto;padding:22px;background:rgba(9,22,19,.98);border-right:1px solid #355a47;border-bottom:1px solid #355a47;box-shadow:18px 28px 44px rgba(0,0,0,.45)}
+.site-menu.is-open{display:block}
+.site-menu a{display:block;padding:12px 11px;border-bottom:1px solid #294537;color:#d9efde;font-size:13px;text-decoration:none}
+.site-menu a:hover,.site-menu a:focus-visible{background:#1b362c;color:#a9ffd0}
+.site-menu .menu-heading{font-size:10px;color:#8db6a1;letter-spacing:.15em;margin:13px 9px 5px}
+@media(max-width:650px){.site-header{height:59px;padding:0 10px}.site-menu{top:59px;max-height:calc(100dvh - 59px)}.site-brand{font-size:14px}.menu-toggle{gap:6px;font-size:10px;padding:10px 4px}.menu-toggle .menu-bars,.menu-toggle .menu-bars i{width:18px}.site-header .header-lang .lang-choice{font-size:10px;padding:6px}.site-header .header-lang .language-switch{gap:3px}body.site-ready .top{top:66px;right:11px}body.site-ready .home{padding-top:90px}}
+
+/* v8.5: one-line transparent navigation with sound and language visible */
+.site-header{grid-template-columns:minmax(115px,1fr) auto minmax(260px,1fr);gap:12px}
+.site-header .header-lang{justify-self:end;gap:11px;min-width:0}
+.site-header .header-lang #sound{white-space:nowrap;padding:9px 12px;font-size:11px;background:rgba(14,29,27,.56);border-color:#4d7964}
+.site-header .header-lang .language-switch{display:flex!important;white-space:nowrap}
+@media(max-width:710px){.site-header{padding:0 9px;gap:6px;grid-template-columns:auto minmax(0,1fr) auto}.site-brand{font-size:clamp(12px,2.6vw,16px);overflow:hidden;text-overflow:ellipsis}.site-header .header-lang{gap:4px}.site-header .header-lang #sound{padding:8px 5px;font-size:10px}.site-header .header-lang .language-switch{padding:2px}.site-header .header-lang .lang-choice{padding:5px 4px;font-size:10px}}
+@media(max-width:420px){.menu-toggle #menu-label{display:none}.site-header .header-lang .lang-choice{font-size:9px;padding:5px 2px}.site-header .header-lang #sound{font-size:9px}}
+
+/* Home gallery 02: illustration and graphic design. */
+#illustrations{padding:12px 0 90px;scroll-margin-top:105px}
+#home.project-open #illustrations{display:none!important}
+.illustration-intro{margin:0 0 25px;color:#a5beb0;font-size:13px;line-height:1.8}
+.illustration-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.illustration-slot{margin:0;border:1px solid #395a4b;border-radius:12px;overflow:hidden;background:#0c1d19;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.illustration-open{display:block;width:100%;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.illustration-open:focus-visible{outline:2px solid #b8ffe0;outline-offset:-2px}
+.illustration-slot-visual{position:relative;aspect-ratio:1/1;overflow:hidden;background:linear-gradient(135deg,#162d26,#0b171b);border-bottom:1px solid #305446}
+.illustration-slot-visual img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s ease,filter .35s ease}
+.illustration-slot:hover .illustration-slot-visual img,.illustration-open:focus-visible .illustration-slot-visual img{transform:scale(1.04);filter:saturate(1.03) brightness(1.02)}
+.illustration-zoom-hint{position:absolute;right:12px;bottom:12px;padding:7px 10px;border:1px solid rgba(191,255,226,.25);border-radius:999px;background:rgba(7,16,16,.58);backdrop-filter:blur(10px);color:#dcfff0;font:10px monospace;letter-spacing:.14em;text-transform:uppercase}
+.illustration-slot figcaption{padding:15px 17px;color:#d7eee0;font-size:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.illustration-slot figcaption span{display:block;line-height:1.5}
+.illustration-slot figcaption small{color:#83a898;font:10px monospace;letter-spacing:.14em;flex:none;padding-top:3px}
+.illustration-lightbox{position:fixed;inset:0;z-index:160;display:none;align-items:center;justify-content:center;padding:34px;background:rgba(3,10,12,.84);backdrop-filter:blur(12px)}
+.illustration-lightbox.is-open{display:flex}
+.illustration-lightbox-backdrop{position:absolute;inset:0}
+.illustration-lightbox-panel{position:relative;z-index:1;max-width:min(1080px,92vw);max-height:90vh;width:auto;display:flex;flex-direction:column;gap:14px}
+.illustration-lightbox-frame{margin:0;border:1px solid rgba(101,151,129,.55);border-radius:14px;overflow:hidden;background:#081210;box-shadow:0 25px 70px rgba(0,0,0,.45)}
+.illustration-lightbox-frame img{display:block;max-width:100%;max-height:calc(90vh - 88px);width:auto;height:auto;margin:auto;background:#081210}
+.illustration-lightbox-caption{padding:15px 18px;border-top:1px solid rgba(73,111,95,.55);display:flex;align-items:center;justify-content:space-between;gap:16px;color:#dff8eb;background:rgba(9,18,16,.94)}
+.illustration-lightbox-caption strong{font-size:15px;line-height:1.4}
+.illustration-lightbox-caption span{display:block;color:#88a998;font:11px monospace;letter-spacing:.15em;text-transform:uppercase;margin-top:4px}
+.illustration-lightbox-close{position:absolute;top:-12px;right:-12px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(120,174,150,.7);background:rgba(9,19,17,.95);color:#ecfff7;font-size:24px;line-height:1;cursor:pointer;box-shadow:0 12px 24px rgba(0,0,0,.28)}
+body.lightbox-open{overflow:hidden}
+@media(max-width:980px){.illustration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.illustration-grid{grid-template-columns:1fr}.illustration-lightbox{padding:18px}.illustration-lightbox-panel{max-width:100%;width:100%}.illustration-lightbox-caption{align-items:flex-start;flex-direction:column}.illustration-lightbox-close{top:10px;right:10px}}
+
+/* Pixel illustration carousel: preserve native pixel edges and crossfade slides. */
+.illustration-slot-visual img[src*="pixel-band"],.illustration-lightbox-frame img[src*="pixel-band"]{image-rendering:pixelated}
+.illustration-lightbox-frame img{transition:opacity .32s ease}
+.illustration-lightbox-frame img.is-transitioning{opacity:0}
+.illustration-lightbox-arrow{position:absolute;top:43%;z-index:4;display:grid;place-items:center;width:48px;height:58px;cursor:pointer;border:1px solid rgba(160,223,188,.55);border-radius:8px;color:#e6fff0;background:rgba(9,30,23,.83);font-size:42px;line-height:1;transition:background .2s ease,transform .2s ease}
+.illustration-lightbox-arrow:hover,.illustration-lightbox-arrow:focus-visible{background:rgba(26,78,49,.95);transform:scale(1.05)}
+.illustration-lightbox-arrow[hidden],.illustration-slide-counter[hidden]{display:none!important}
+.illustration-lightbox-prev{left:-62px}.illustration-lightbox-next{right:-62px}
+.illustration-slide-counter{position:absolute;z-index:3;left:50%;bottom:-30px;transform:translateX(-50%);font:12px monospace;letter-spacing:.16em;color:#c4e9d4}
+@media(max-width:650px){.illustration-lightbox-arrow{top:40%;width:38px;height:48px;font-size:34px}.illustration-lightbox-prev{left:5px}.illustration-lightbox-next{right:5px}.illustration-slide-counter{bottom:-25px}}
+@media(prefers-reduced-motion:reduce){.illustration-lightbox-frame img{transition:none}}
+
+/* PROJECT 004 / AKA */
+#project-004 .aka-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:30px;max-width:100%}
+#project-004 .aka-figure,#project-004 .aka-video-card{width:100%;margin:0;min-width:0}
+#project-004 .aka-figure img{width:100%;height:auto;display:block;object-fit:contain;border-radius:7px;border:1px solid #355648}
+#project-004 .aka-figure figcaption,#project-004 .aka-video-card figcaption{padding:11px 2px;color:#adc5b6;font-size:12px}
+#project-004 .aka-media-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+#project-004 .aka-video-card video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid #426953;border-radius:8px}
+#project-004 .aka-video-card .aka-video-note{display:block;margin-top:5px;color:#86a796;font-size:11px;letter-spacing:.04em}
+#project-004 .aka-key-visual img{background:#111}
+#project-004 .aka-video-first{display:none}
+@media(max-width:720px){#project-004 .aka-media-row{grid-template-columns:1fr}}
+
+/* v9.2: compact hero browse dropdown */
+.hero .browse-works{position:relative;display:inline-block;z-index:3;margin-top:0}
+.hero .browse-toggle{display:inline-flex;align-items:center;justify-content:center;gap:12px;cursor:pointer}
+.hero .browse-chevron{transition:transform .22s ease;flex:none}
+.hero .browse-toggle[aria-expanded="true"] .browse-chevron{transform:rotate(180deg)}
+.hero .browse-options{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);width:max(100%,178px);padding:6px;border:1px solid #568a70;border-radius:7px;background:rgba(10,27,22,.97);box-shadow:0 16px 35px #0008;backdrop-filter:blur(12px)}
+.hero .browse-options[hidden]{display:none}
+.hero .browse-options a{display:block;padding:12px 18px;text-decoration:none;text-align:center;color:#d9fae5;font-size:14px;border-radius:4px;transition:background .15s,color .15s}
+.hero .browse-options a:hover,.hero .browse-options a:focus-visible{background:#284c3d;color:#fff;outline:none}
+@media(prefers-reduced-motion:reduce){.hero .browse-chevron,.hero .browse-options a{transition:none}}
+
+/* v9.7: Align the Latin 3D with CJK glyphs using a matching sans-serif face. */
+#gallery-heading .gallery-title-latin{font-family:Arial,'Helvetica Neue',sans-serif;font-weight:900;font-style:normal;letter-spacing:-.045em;vertical-align:baseline;margin-right:.035em}
+
+
+/* v10.2 AKA: key visual above project background; balanced square video pair. */
+#project-004 .detail-cover.aka-key-visual{margin:0 0 18px}
+#project-004 .detail-cover.aka-key-visual img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border:1px solid #355648;border-radius:7px}
+#project-004 .detail-cover.aka-key-visual figcaption{padding:11px 2px;color:#adc5b6;font-size:12px}
+#project-004 .aka-media-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+#project-004 .aka-video-card video{aspect-ratio:1 / 1;max-height:none;width:100%;height:auto;object-fit:contain;background:#000}
+@media(max-width:600px){#project-004 .aka-media-row{gap:10px}#project-004 .aka-video-card figcaption{font-size:11px}}
+
+/* v10.3 My Time Machine — physical scale-model gallery */
+#my-time-machine .physical-model-gallery{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+#my-time-machine .physical-model-gallery figure{margin:0;min-width:0}
+#my-time-machine .physical-model-gallery img{display:block;width:100%;height:auto;object-fit:contain;border:1px solid #345947;border-radius:7px;background:#0b1513}
+#my-time-machine .physical-model-gallery figcaption{padding:10px 2px;color:#adc5b6;font-size:12px}
+@media(max-width:680px){#my-time-machine .physical-model-gallery{grid-template-columns:minmax(0,1fr)}}
+
+/* v10.4 - additional clip under the original Robots project film */
+#project-002 .robot-additional-video{margin:26px 0 0;max-width:100%}
+#project-002 .robot-additional-video video{width:100%;height:auto;display:block;aspect-ratio:1920/810;object-fit:contain;background:#000;border:1px solid #426953;border-radius:7px}
+#project-002 .robot-additional-video figcaption{color:#afcbb8;font-size:12px;padding:12px 3px}
+</style></head><body><div aria-hidden="true" class="ambient-lights"><span class="ambient-light" style="--x:5.3%;--y:90.7%;--s:4.5px;--d:5.2s;--delay:-10.2s;--peak:0.89"></span><span class="ambient-light" style="--x:92.9%;--y:4.0%;--s:4.2px;--d:8.0s;--delay:-9.7s;--peak:0.83"></span><span class="ambient-light" style="--x:15.5%;--y:71.5%;--s:3.0px;--d:10.4s;--delay:-11.6s;--peak:0.96"></span><span class="ambient-light" style="--x:97.2%;--y:12.5%;--s:3.7px;--d:11.8s;--delay:-3.7s;--peak:0.65"></span><span class="ambient-light" style="--x:15.2%;--y:56.0%;--s:4.5px;--d:7.0s;--delay:-1.1s;--peak:0.84"></span><span class="ambient-light" style="--x:96.1%;--y:63.9%;--s:2.5px;--d:7.7s;--delay:-1.5s;--peak:0.78"></span><span class="ambient-light" style="--x:15.8%;--y:45.5%;--s:3.5px;--d:6.8s;--delay:-6.2s;--peak:1.00"></span><span class="ambient-light" style="--x:87.6%;--y:31.8%;--s:3.9px;--d:12.1s;--delay:-0.7s;--peak:0.87"></span><span class="ambient-light" style="--x:12.4%;--y:59.9%;--s:3.4px;--d:10.4s;--delay:-10.2s;--peak:0.72"></span><span class="ambient-light" style="--x:82.8%;--y:16.7%;--s:3.5px;--d:6.9s;--delay:-5.7s;--peak:0.83"></span><span class="ambient-light" style="--x:9.3%;--y:61.8%;--s:3.5px;--d:9.2s;--delay:-9.4s;--peak:0.77"></span><span class="ambient-light" style="--x:80.5%;--y:88.4%;--s:3.1px;--d:8.2s;--delay:-1.4s;--peak:0.84"></span><span class="ambient-light" style="--x:16.4%;--y:10.1%;--s:3.6px;--d:5.4s;--delay:-5.0s;--peak:0.69"></span><span class="ambient-light" style="--x:93.9%;--y:90.2%;--s:3.5px;--d:7.9s;--delay:-8.8s;--peak:0.93"></span><span class="ambient-light" style="--x:2.3%;--y:48.4%;--s:4.0px;--d:12.3s;--delay:-2.0s;--peak:0.96"></span><span class="ambient-light" style="--x:84.4%;--y:60.1%;--s:4.2px;--d:11.5s;--delay:-3.8s;--peak:0.89"></span><span class="ambient-light" style="--x:8.0%;--y:24.7%;--s:4.5px;--d:5.4s;--delay:-11.7s;--peak:0.64"></span><span class="ambient-light" style="--x:95.8%;--y:27.0%;--s:3.0px;--d:5.0s;--delay:-6.9s;--peak:0.91"></span><span class="ambient-light" style="--x:16.7%;--y:23.9%;--s:2.8px;--d:5.2s;--delay:-1.6s;--peak:0.86"></span><span class="ambient-light" style="--x:83.5%;--y:16.9%;--s:2.4px;--d:5.5s;--delay:-2.0s;--peak:0.88"></span><span class="ambient-light" style="--x:12.5%;--y:55.2%;--s:2.9px;--d:11.0s;--delay:-2.9s;--peak:0.89"></span><span class="ambient-light" style="--x:92.1%;--y:71.5%;--s:3.6px;--d:6.2s;--delay:-8.2s;--peak:0.81"></span><span class="ambient-light" style="--x:1.2%;--y:49.0%;--s:2.7px;--d:6.6s;--delay:-5.2s;--peak:0.97"></span><span class="ambient-light" style="--x:83.5%;--y:42.1%;--s:4.1px;--d:8.8s;--delay:-11.6s;--peak:0.94"></span><span class="ambient-light" style="--x:15.2%;--y:52.0%;--s:3.6px;--d:10.2s;--delay:-10.5s;--peak:0.63"></span><span class="ambient-light" style="--x:97.0%;--y:27.6%;--s:2.2px;--d:8.9s;--delay:-2.5s;--peak:0.76"></span><span class="ambient-light" style="--x:3.0%;--y:64.1%;--s:3.1px;--d:6.3s;--delay:-10.6s;--peak:0.64"></span><span class="ambient-light" style="--x:97.2%;--y:89.9%;--s:2.8px;--d:11.1s;--delay:-5.7s;--peak:0.69"></span><span class="ambient-light" style="--x:6.0%;--y:45.8%;--s:2.9px;--d:7.0s;--delay:-7.2s;--peak:0.79"></span><span class="ambient-light" style="--x:97.5%;--y:83.2%;--s:2.5px;--d:11.3s;--delay:-2.3s;--peak:0.87"></span><span class="ambient-light" style="--x:7.6%;--y:87.0%;--s:3.1px;--d:11.8s;--delay:-10.8s;--peak:0.68"></span><span class="ambient-light" style="--x:96.6%;--y:8.0%;--s:2.6px;--d:7.0s;--delay:-7.8s;--peak:0.66"></span><span class="ambient-light" style="--x:11.7%;--y:91.4%;--s:2.3px;--d:11.8s;--delay:-6.1s;--peak:0.82"></span><span class="ambient-light" style="--x:89.2%;--y:45.0%;--s:3.3px;--d:12.4s;--delay:-10.8s;--peak:0.92"></span><span class="ambient-light" style="--x:14.7%;--y:34.9%;--s:2.3px;--d:11.9s;--delay:-5.8s;--peak:0.82"></span><span class="ambient-light" style="--x:93.2%;--y:34.5%;--s:3.3px;--d:10.0s;--delay:-8.9s;--peak:0.64"></span></div>
+<script>
+/* Screen-wide soft particles with smooth cursor repulsion; no mouse blocking. */
+(function(){
+  const nodes = Array.from(document.querySelectorAll('.ambient-lights .ambient-light'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobile = window.matchMedia('(max-width: 760px)').matches;
+  const pointer = {x:-10000,y:-10000};
+  const points = [];
+  const activeCount = mobile ? 20 : nodes.length;
+  let vw=window.innerWidth, vh=window.innerHeight;
+  let frameId=0;
+  const rand=(min,max)=>min+Math.random()*(max-min);
+  function positionParticles(){
+    vw=window.innerWidth;vh=window.innerHeight;
+    points.forEach((point)=>{
+      point.x=point.fx*vw; point.y=point.fy*vh;
+      point.node.style.left=point.x+'px';
+      point.node.style.top=point.y+'px';
+    });
+  }
+  nodes.forEach((node,i)=>{
+    /* A dispersed layout, with some particles in the gutters and some in open spaces. */
+    const col=i%6, row=Math.floor(i/6);
+    const fx=Math.max(.018,Math.min(.982,(col+rand(.16,.84))/6));
+    const fy=Math.max(.035,Math.min(.965,(row+rand(.15,.85))/6));
+    node.style.setProperty('--s',rand(2.0,4.0).toFixed(1)+'px');
+    node.style.setProperty('--d',rand(7,17).toFixed(1)+'s');
+    node.style.setProperty('--delay',(-rand(0,18)).toFixed(1)+'s');
+    node.style.setProperty('--peak',rand(.39,.62).toFixed(2));
+    points.push({node,fx,fy,x:0,y:0,dx:0,dy:0});
+  });
+  positionParticles();
+  if(reduceMotion)return;
+  window.addEventListener('pointermove',(e)=>{
+    if(e.pointerType==='touch')return;
+    pointer.x=e.clientX; pointer.y=e.clientY;
+  },{passive:true});
+  window.addEventListener('pointerleave',()=>{
+    pointer.x=-10000;pointer.y=-10000;
+  });
+  window.addEventListener('resize',positionParticles,{passive:true});
+  function animate(){
+    const radius=145;
+    for(let i=0;i<activeCount;i++){
+      const p=points[i],vx=p.x-pointer.x,vy=p.y-pointer.y;
+      const dist=Math.hypot(vx,vy);
+      const force=dist>0&&dist<radius?Math.pow(1-dist/radius,2)*52:0;
+      const targetX=force*vx/dist||0,targetY=force*vy/dist||0;
+      p.dx+=(targetX-p.dx)*.11;
+      p.dy+=(targetY-p.dy)*.11;
+      if(Math.abs(p.dx)+Math.abs(p.dy)>.06){
+        p.node.style.setProperty('--push-x',p.dx.toFixed(2)+'px');
+        p.node.style.setProperty('--push-y',p.dy.toFixed(2)+'px');
+      }else if(p.dx||p.dy){
+        p.dx=0;p.dy=0;
+        p.node.style.setProperty('--push-x','0px');
+        p.node.style.setProperty('--push-y','0px');
+      }
+    }
+    frameId=requestAnimationFrame(animate);
+  }
+  /* Suspend the animation while the tab is not visible. */
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){cancelAnimationFrame(frameId);frameId=0;}
+    else if(!frameId){frameId=requestAnimationFrame(animate);}
+  });
+  frameId=requestAnimationFrame(animate);
+})();
+</script>
+<div class="site-header" id="site-header">
+<button aria-controls="site-menu" aria-expanded="false" class="menu-toggle" data-cn="選單" data-en="Menu" id="menu-toggle" type="button"><span aria-hidden="true" class="menu-bars"><i></i><i></i></span><span id="menu-label">選單</span></button>
+<a class="site-brand" href="#projects" id="site-brand">Allen's Portfolio</a>
+<div class="header-lang" id="header-lang"></div>
+</div>
+<nav aria-label="網站選單 / Site menu" class="site-menu" id="site-menu">
+<div class="menu-heading">NAVIGATION / 導覽</div>
+<a data-cn="首頁 / 精選專案" data-en="Home / Selected Projects" data-go="projects" href="#projects">首頁 / 精選專案</a>
+<div class="menu-heading">PROJECT FILES</div>
+<a data-cn="01 / 我的時光機" data-en="01 / My Time Machine" data-go="my-time-machine" href="#my-time-machine">01 / 我的時光機</a>
+<a data-go="project-002" href="#project-002">02 / Robots In The Desert</a>
+<a data-cn="03 / 虛擬偶像製作" data-en="03 / Virtual Idol Production" data-go="project-003" href="#project-003">03 / 虛擬偶像製作</a>
+<a data-cn="04 / 角色設計與動態捕捉" data-en="04 / Character Design &amp; Motion Capture" data-go="project-004" href="#project-004">04 / 角色設計與動態捕捉</a>
+<div class="menu-heading">CREATOR</div>
+<a data-cn="插畫與平面作品" data-en="Illustration &amp; Graphic Design" data-go="illustrations" href="#illustrations">插畫與平面作品</a>
+<a data-cn="關於 / Allen Lin" data-en="About / Allen Lin" data-go="about" href="#about">關於 / Allen Lin</a>
+<a data-cn="技能與製作工具" data-en="Skills &amp; Tools" data-go="creator-skills" href="#creator-skills">技能與製作工具</a>
+<a data-cn="聯絡方式" data-en="Contact" data-go="home-contact" href="#home-contact">聯絡方式</a>
+</nav>
+<div class="top"><div aria-label="Language / 語言" class="language-switch" role="group"><button aria-pressed="true" class="lang-choice active" id="lang-zh" type="button">繁中</button><span aria-hidden="true" class="lang-divider">/</span><button aria-pressed="false" class="lang-choice" id="lang-en" type="button">English</button></div><button aria-pressed="true" class="plain" id="sound">音效：開</button><button class="plain" id="skip">SKIP INTRO →</button></div>
+<a aria-label="返回首頁 / Back to Home" class="edge-home" hidden="" href="#home" id="edge-home" title="返回首頁 / Back to Home"><svg aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" viewbox="0 0 24 24"><path d="M19 12H5m7-7-7 7 7 7"></path></svg><span data-cn="首頁" data-en="Home">首頁</span></a>
+<main class="stage" id="intro"><section aria-label="互動式記憶卡讀取機台" class="scene"><p class="overline">ARCHIVE ACCESS TERMINAL · PROTOTYPE 02</p><div class="machine" id="machine"><div class="brandline"><span aria-hidden="true"></span><span>TERMINAL / 01</span></div><div class="monitor-bezel"><div aria-live="polite" class="monitor"><div class="screen-top"><span>SYS // CREATOR INTERFACE</span><span id="screen-code">00-STANDBY</span></div><h1 id="status">SYSTEM OFFLINE</h1><p id="substatus">NO MEMORY CARD</p><div class="log" id="log"><div>› INSERT AUTHORIZED MEMORY UNIT</div><div>› AWAITING USER INPUT _</div></div><div class="progress"><div id="bar"></div></div></div></div><div class="deck"><div class="lamps"><div class="lampbox"><span class="lamp on" id="pwr"></span>PWR</div><div class="lampbox"><span class="lamp" id="link"></span>LINK</div><div class="lampbox"><span class="lamp" id="read"></span>READ</div></div><div class="slotwrap"><div class="slotlabel">▼ MEMORY INPUT ▼</div><div aria-label="記憶卡插槽" class="slot" id="slot"></div></div><div class="serial">ARCHIVE<br/>DATA PORT-01<br/>REV. 198X</div></div></div><div class="card-area" id="cardArea"><button aria-label="點擊或拖曳記憶卡插入機台" class="card" id="card" type="button"><small>CREATOR DATA UNIT</small><strong class="card-portfolio-name">Allen's Portfolio</strong><small>PERSONAL ARCHIVE</small></button></div><div class="hint" id="hint">CLICK OR DRAG CARD TO INSERT</div><div class="footer">DESKTOP: CLICK / DRAG · MOBILE: TAP · SKIP AVAILABLE</div></section></main>
+<main hidden="" id="home"><div class="home"><header><span class="wordmark">ALLEN'S PORTFOLIO</span><nav><a href="#projects">PROJECTS</a><a data-cn="插畫與平面作品" data-en="ILLUSTRATION" href="#illustrations">插畫與平面作品</a><a href="#about">ABOUT</a><a href="mailto:Allenlinph@gmail.com">CONTACT</a></nav></header><section class="hero"><div aria-hidden="true" class="hero-sparkles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tag">● CREATOR ARCHIVE / ONLINE</div><h2>ALLEN'S ART BASE</h2><p>Game Development · 3D Art · Technical Art</p><div class="browse-works" id="browse-works"><button aria-controls="browse-options" aria-expanded="false" class="enterbutton browse-toggle" id="browse-toggle" type="button"><span data-cn="瀏覽作品" data-en="Browse Works">瀏覽作品</span><svg aria-hidden="true" class="browse-chevron" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="m6 9 6 6 6-6"></path></svg></button><div class="browse-options" hidden="" id="browse-options"><a data-cn="3D作品" data-en="3D Works" href="#projects">3D作品</a><a data-cn="2D作品" data-en="2D Works" href="#illustrations">2D作品</a></div></div></section><section aria-labelledby="gallery-heading" class="archive-gallery" id="projects">
+<div class="gallery-heading"><div><p class="gallery-kicker" data-project-i18n="galleryKicker">ARCHIVE / PROJECT FILES</p><h3 data-project-i18n="galleryTitle" id="gallery-heading"><span class="gallery-title-latin">3D</span>作品</h3></div><span class="gallery-index">INDEX — 001 / 004</span></div>
+<a aria-label="開啟我的時光機專案" class="featured-work mtm-feature" href="#my-time-machine" id="open-project">
+<div class="mtm-cover"><img alt="《我的時光機》主視覺：古銅色時間機器與圖書館場景" loading="lazy" src="assets/my-time-machine/home-cover.webp"/><span class="mtm-cover-label">PROJECT / 001</span></div>
+<div class="featured-copy"><span class="work-type" data-project-i18n="featuredLabel">FEATURED PROJECT / 001</span><h4 data-project-i18n="projectTitle">我的時光機</h4><p class="mtm-english" data-cn="VR 6DoF 動畫作品 · 2026" data-en="VR 6DoF Animation Project · 2026">VR 6DoF 動畫作品 · 2026</p><p data-project-i18n="roleShort">負責｜2D 概念美術 · 3D 場景美術</p><span class="gallery-link" data-project-i18n="openFile">開啟專案檔案 ↗</span></div>
+</a>
+<a aria-label="開啟 Robots In The Desert 專案" class="featured-work mtm-feature project-card-secondary" href="#project-002" id="open-project-2"><div class="mtm-cover"><img alt="Robots In The Desert 主視覺：沙漠中的機器人角色與飛船" decoding="async" loading="lazy" src="assets/robots-in-the-desert/ri-home-cover.webp"/><span class="mtm-cover-label">PROJECT / 002</span></div><div class="featured-copy"><span class="work-type" data-cn="FEATURED PROJECT / 002" data-en="FEATURED PROJECT / 002">FEATURED PROJECT / 002</span><h4 data-cn="Robots In The Desert" data-en="Robots In The Desert">Robots In The Desert</h4><p class="mtm-english" data-cn="3D 動畫作品 · 2023" data-en="3D Animation Project · 2023">3D 動畫作品 · 2023</p><p data-cn="負責｜動畫 · 3D美術" data-en="Role / Animation · 3D Art">負責｜動畫 · 3D美術</p><span class="gallery-link" data-cn="開啟專案檔案 ↗" data-en="Open Project File ↗">開啟專案檔案 ↗</span></div></a>
+<a aria-label="開啟虛擬偶像製作專案" class="featured-work mtm-feature project-card-secondary" href="#project-003" id="open-project-3"><div class="mtm-cover"><img alt="虛擬偶像 MV 舞台" decoding="async" loading="lazy" src="assets/virtual-idol/04.webp"/><span class="mtm-cover-label">PROJECT / 003</span></div><div class="featured-copy"><span class="work-type">PROJECT / 003</span><h4 data-cn="虛擬偶像製作" data-en="Virtual Idol Production">虛擬偶像製作</h4><p class="mtm-english" data-cn="動畫 MV 製作 · 2022 實習作品" data-en="Animated Music Videos · 2022 Internship">動畫 MV 製作 · 2022 實習作品</p><p data-cn="夢想動畫｜兩部動畫 MV" data-en="MoonShine Animation · Two Animated MVs">夢想動畫｜兩部動畫 MV</p><span class="gallery-link" data-cn="開啟專案檔案 ↗" data-en="Open Project File ↗">開啟專案檔案 ↗</span></div></a>
+<a aria-label="開啟角色設計與動態捕捉專案" class="featured-work mtm-feature project-card-secondary" href="#project-004" id="open-project-4"><div class="mtm-cover"><img alt="AKA 角色於 Unreal Engine 的即時動畫展示" decoding="async" loading="lazy" src="assets/character-aka/aka-unreal-cover.webp"/><span class="mtm-cover-label">PROJECT / 004</span></div><div class="featured-copy"><span class="work-type">PROJECT / 004</span><h4 data-cn="角色設計與動態捕捉" data-en="Character Design &amp; Motion Capture">角色設計與動態捕捉</h4><p class="mtm-english" data-cn="角色設計 · 3D 製作 · 2024" data-en="Character Design · 3D Production · 2024">角色設計 · 3D 製作 · 2024</p><p data-cn="AKA｜角色概念、建模與 Rigging" data-en="AKA · Concept, Modeling &amp; Rigging">AKA｜角色概念、建模與 Rigging</p><span class="gallery-link" data-cn="開啟專案檔案 ↗" data-en="Open Project File ↗">開啟專案檔案 ↗</span></div></a>
+<div class="mtm-next"><span data-project-i18n="futureNote">未來的作品將以獨立專案形式陸續加入，不依專業類型分類。</span></div>
+</section>
+<section aria-labelledby="illustration-heading" id="illustrations"><div class="gallery-heading"><div><p class="gallery-kicker" data-cn="ARCHIVE / ILLUSTRATION &amp; GRAPHIC DESIGN" data-en="ARCHIVE / ILLUSTRATION &amp; GRAPHIC DESIGN">ARCHIVE / ILLUSTRATION &amp; GRAPHIC DESIGN</p><h3 data-cn="插畫與平面作品" data-en="Illustration &amp; Graphic Design" id="illustration-heading">插畫與平面作品</h3></div><span class="gallery-index">INDEX — 002</span></div><p class="illustration-intro" data-cn="收錄插畫、角色設計與平面視覺創作。所有縮圖統一使用 1:1 方形顯示，點擊後可在首頁內放大觀看完整作品。" data-en="A collection of illustration, character design, and graphic work. All thumbnails use a 1:1 square crop, and each artwork can be enlarged in-place without leaving the homepage.">收錄插畫、角色設計與平面視覺創作。所有縮圖統一使用 1:1 方形顯示，點擊後可在首頁內放大觀看完整作品。</p><div class="illustration-grid"><figure class="illustration-slot"><button aria-label="放大查看作品 01" class="illustration-open" data-full="assets/illustrations/artwork-01.jpg" data-index="01 / 06" data-slides="assets/illustrations/artwork-01.jpg|assets/illustrations/sketch-concepts-01.webp|assets/illustrations/sketch-concepts-02.webp" data-title-cn="作品 01 / TALK 青年講堂海報" data-title-en="Artwork 01 / TALK Youth Lecture Poster" type="button"><div class="illustration-slot-visual"><img alt="TALK 青年講堂角色插畫海報" loading="lazy" src="assets/illustrations/artwork-01.jpg"/><span class="illustration-zoom-hint" data-cn="點擊放大 · 3 張" data-en="View 3 images">點擊放大 · 3 張</span></div><figcaption><span data-cn="作品 01 / TALK 青年講堂海報" data-en="Artwork 01 / TALK Youth Lecture Poster">作品 01 / TALK 青年講堂海報</span><small>01 / 06</small></figcaption></button></figure><figure class="illustration-slot"><button aria-label="放大查看作品 02" class="illustration-open" data-full="assets/illustrations/artwork-02.jpg" data-index="02 / 06" data-slides="assets/illustrations/artwork-02.jpg|assets/illustrations/chill-sketch.webp" data-title-cn="作品 02 / Chill 角色插畫" data-title-en="Artwork 02 / Chill Character Illustration" type="button"><div class="illustration-slot-visual"><img alt="粉色背景上的藍紫色角色插畫，旁邊有 Chill 字樣" loading="lazy" src="assets/illustrations/artwork-02.jpg"/><span class="illustration-zoom-hint" data-cn="點擊放大 · 2 張" data-en="View 2 images">點擊放大 · 2 張</span></div><figcaption><span data-cn="作品 02 / Chill 角色插畫" data-en="Artwork 02 / Chill Character Illustration">作品 02 / Chill 角色插畫</span><small>02 / 06</small></figcaption></button></figure><figure class="illustration-slot"><button aria-label="放大查看作品 03" class="illustration-open" data-full="assets/illustrations/artwork-03.jpg" data-index="03 / 06" data-slides="assets/illustrations/artwork-03.jpg|assets/illustrations/gem-warrior-stage-01.webp|assets/illustrations/gem-warrior-stage-02.webp|assets/illustrations/gem-warrior-stage-03.webp" data-title-cn="作品 03 / 寶石戰士角色設計" data-title-en="Artwork 03 / Gem Warrior Character Design" type="button"><div class="illustration-slot-visual"><img alt="手持藍色寶石武器的卡通角色設計" loading="lazy" src="assets/illustrations/artwork-03.jpg"/><span class="illustration-zoom-hint" data-cn="點擊放大 · 4 張" data-en="View 4 images">點擊放大 · 4 張</span></div><figcaption><span data-cn="作品 03 / 寶石戰士角色設計" data-en="Artwork 03 / Gem Warrior Character Design">作品 03 / 寶石戰士角色設計</span><small>03 / 06</small></figcaption></button></figure><figure class="illustration-slot"><button aria-label="放大查看作品 04" class="illustration-open" data-full="assets/illustrations/artwork-04.png" data-index="04 / 06" data-title-cn="作品 04 / 香蕉角色草圖" data-title-en="Artwork 04 / Banana Character Sketch" type="button"><div class="illustration-slot-visual"><img alt="黑白手繪香蕉角色草圖" loading="lazy" src="assets/illustrations/artwork-04.png"/><span class="illustration-zoom-hint" data-cn="點擊放大" data-en="Click to enlarge">點擊放大</span></div><figcaption><span data-cn="作品 04 / 香蕉角色草圖" data-en="Artwork 04 / Banana Character Sketch">作品 04 / 香蕉角色草圖</span><small>04 / 06</small></figcaption></button></figure><figure class="illustration-slot"><button aria-label="放大查看作品 05" class="illustration-open" data-full="assets/illustrations/artwork-05.jpg" data-index="05 / 06" data-title-cn="作品 05 / 怪獸線稿設計" data-title-en="Artwork 05 / Monster Line Art" type="button"><div class="illustration-slot-visual"><img alt="黑白怪獸線稿設計" loading="lazy" src="assets/illustrations/artwork-05.jpg"/><span class="illustration-zoom-hint" data-cn="點擊放大" data-en="Click to enlarge">點擊放大</span></div><figcaption><span data-cn="作品 05 / 怪獸線稿設計" data-en="Artwork 05 / Monster Line Art">作品 05 / 怪獸線稿設計</span><small>05 / 06</small></figcaption></button></figure><figure class="illustration-slot"><button aria-label="放大查看作品 06" class="illustration-open" data-full="assets/illustrations/pixel-band-cover.png" data-index="06 / 06" data-slides="assets/illustrations/pixel-band-cover.png|assets/illustrations/pixel-band-sheet.png" data-title-cn="作品 06 / 像素樂團角色設計" data-title-en="Artwork 06 / Pixel Band Character Design" type="button"><div class="illustration-slot-visual"><img alt="像素風格四人樂團角色封面" decoding="async" loading="lazy" src="assets/illustrations/pixel-band-cover.png"/><span class="illustration-zoom-hint" data-cn="點擊放大 · 2 張" data-en="View 2 images">點擊放大 · 2 張</span></div><figcaption><span data-cn="作品 06 / 像素樂團角色設計" data-en="Artwork 06 / Pixel Band Character Design">作品 06 / 像素樂團角色設計</span><small>06 / 06</small></figcaption></button></figure></div></section>
+<div aria-hidden="true" class="illustration-lightbox" hidden="" id="illustration-lightbox"><div class="illustration-lightbox-backdrop" data-close-lightbox=""></div><div aria-labelledby="illustration-lightbox-title" aria-modal="true" class="illustration-lightbox-panel" role="dialog"><button aria-label="關閉 / Close" class="illustration-lightbox-close" id="illustration-lightbox-close" type="button">×</button><button aria-label="上一張 / Previous image" class="illustration-lightbox-arrow illustration-lightbox-prev" hidden="" id="illustration-prev" type="button">‹</button><button aria-label="下一張 / Next image" class="illustration-lightbox-arrow illustration-lightbox-next" hidden="" id="illustration-next" type="button">›</button><div class="illustration-slide-counter" hidden="" id="illustration-slide-counter">01 / 02</div><figure class="illustration-lightbox-frame"><img alt="" id="illustration-lightbox-image" src=""/><figcaption class="illustration-lightbox-caption"><div><strong id="illustration-lightbox-title">Artwork</strong><span id="illustration-lightbox-index">01 / 06</span></div><span data-cn="首頁內放大預覽" data-en="In-page artwork preview">首頁內放大預覽</span></figcaption></figure></div></div><section aria-labelledby="detail-title" class="project-detail" hidden="" id="my-time-machine">
+<div class="detail-top"><a data-project-i18n="back" href="#projects" id="back-projects">← 返回專案列表</a><span>ARCHIVE FILE / 001</span></div>
+<div class="detail-head"><p class="gallery-kicker">PROJECT FILE / MY TIME MACHINE</p><h2 data-project-i18n="projectTitle" id="detail-title">我的時光機</h2><p class="detail-en">My Time Machine</p><div class="detail-role"><span data-project-i18n="projectFormat">VR 動畫</span></div></div>
+<figure class="detail-cover"><img alt="《我的時光機》主視覺封面" decoding="async" src="assets/my-time-machine/01.webp"/><figcaption data-project-i18n="coverCaption">專案主視覺 / Key Visual</figcaption></figure>
+<div class="detail-info"><div><span class="detail-small" data-project-i18n="myRole">MY ROLE / 我的職責</span><h3 data-project-i18n="roleHeading">2D 概念美術 / 3D 場景美術</h3></div><p data-project-i18n="introCopy">本頁收錄《我的時光機》的完整視覺流程，包含 2D 概念草圖、3D 場景渲染，以及製作過程紀錄，呈現時光機與場景內與外部的發想到建構發展脈絡。</p></div>
+<div class="production-details software-only"><div><span class="detail-small" data-project-i18n="toolsLabel">SOFTWARE / 製作工具</span><div class="tools-list"><span>Maya</span><span>Blender</span><span>ZBrush</span><span>Substance Painter</span><span>Unity</span></div></div></div>
+<section aria-labelledby="project-video-label" class="project-video"><div class="detail-section-heading"><span data-project-i18n="videoSection" id="project-video-label">PROJECT VIDEO / 作品影片</span></div><div class="video-shell" id="video-shell"><button aria-label="播放《我的時光機》YouTube 作品影片" class="video-poster" id="video-launch" type="button"><img alt="我的時光機作品影片封面" loading="lazy" src="assets/my-time-machine/01.webp"/><span class="video-poster-overlay"><span aria-hidden="true" class="video-play-icon">▶</span><span data-project-i18n="playVideo">播放作品影片</span></span></button></div><div class="video-actions"><span class="detail-small" data-project-i18n="videoHint">若影片無法顯示，可使用 YouTube 連結觀看。</span><a data-project-i18n="watchYoutube" href="https://www.youtube.com/watch?v=IxhhuJiFB_U" rel="noopener noreferrer" target="_blank">在 YouTube 觀看 ↗</a></div></section>
+<nav aria-label="Project sections" class="project-subnav"><a data-project-i18n="conceptNav" href="#mtm-concept">2D 概念草圖</a><a data-project-i18n="rendersNav" href="#mtm-renders">3D 場景渲染</a><a data-project-i18n="processNav" href="#mtm-process">製作過程</a></nav>
+<section aria-labelledby="concept-heading" class="project-chapter" id="mtm-concept"><div class="detail-section-heading"><span data-project-i18n="conceptHeading" id="concept-heading">01 / 2D 概念草圖</span><span>01 — 07 / CONCEPT ART</span></div><div class="concept-gallery"><div class="concept-group"><h3 class="concept-group-label" data-cn="場景概念與構圖" data-en="Environment Concept Exploration">場景概念與構圖</h3><p class="concept-group-code">ENVIRONMENT EXPLORATION</p><div class="concept-grid"><figure class="wide"><a aria-label="檢視草圖：初期構圖方向比較" href="assets/my-time-machine/concepts/early-concepts.webp" rel="noopener" target="_blank"><img alt="初期構圖方向比較" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/early-concepts.webp"/></a><figcaption data-cn="初期構圖方向比較" data-en="Early Composition Exploration">初期構圖方向比較</figcaption></figure><figure><a aria-label="檢視草圖：場景構圖探索 01" href="assets/my-time-machine/concepts/concept-01.webp" rel="noopener" target="_blank"><img alt="場景構圖探索 01" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/concept-01.webp"/></a><figcaption data-cn="場景構圖探索 01" data-en="Environment Composition 01">場景構圖探索 01</figcaption></figure><figure><a aria-label="檢視草圖：場景構圖探索 02" href="assets/my-time-machine/concepts/concept-02.webp" rel="noopener" target="_blank"><img alt="場景構圖探索 02" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/concept-02.webp"/></a><figcaption data-cn="場景構圖探索 02" data-en="Environment Composition 02">場景構圖探索 02</figcaption></figure><figure><a aria-label="檢視草圖：場景構圖探索 03" href="assets/my-time-machine/concepts/concept-03.webp" rel="noopener" target="_blank"><img alt="場景構圖探索 03" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/concept-03.webp"/></a><figcaption data-cn="場景構圖探索 03" data-en="Environment Composition 03">場景構圖探索 03</figcaption></figure><figure><a aria-label="檢視草圖：場景構圖探索 04" href="assets/my-time-machine/concepts/concept-04.webp" rel="noopener" target="_blank"><img alt="場景構圖探索 04" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/concept-04.webp"/></a><figcaption data-cn="場景構圖探索 04" data-en="Environment Composition 04">場景構圖探索 04</figcaption></figure><figure><a aria-label="檢視草圖：場景構圖探索 05" href="assets/my-time-machine/concepts/concept-05.webp" rel="noopener" target="_blank"><img alt="場景構圖探索 05" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/concept-05.webp"/></a><figcaption data-cn="場景構圖探索 05" data-en="Environment Composition 05">場景構圖探索 05</figcaption></figure><figure><a aria-label="檢視草圖：場景構圖探索 06" href="assets/my-time-machine/concepts/concept-06.webp" rel="noopener" target="_blank"><img alt="場景構圖探索 06" decoding="async" loading="lazy" src="assets/my-time-machine/concepts/concept-06.webp"/></a><figcaption data-cn="場景構圖探索 06" data-en="Environment Composition 06">場景構圖探索 06</figcaption></figure></div></div></div></section>
+<section aria-labelledby="renders-heading" class="project-chapter" id="mtm-renders"><div class="detail-section-heading"><span data-project-i18n="rendersHeading" id="renders-heading">02 / 3D 場景渲染</span><span>01 — 06</span></div>
+<div class="mtm-image-grid">
+<figure class="wide"><img alt="時間機器開啟艙門的室內環境" loading="lazy" src="assets/my-time-machine/04.webp"/><figcaption data-project-i18n="captionFour">時間機器與室內空間</figcaption></figure>
+<figure><img alt="工作桌、機械草圖與燈光" loading="lazy" src="assets/my-time-machine/02.webp"/><figcaption data-project-i18n="captionTwo">工作桌與場景細節</figcaption></figure>
+<figure><img alt="時間機器內的儀表與機械設備" loading="lazy" src="assets/my-time-machine/05.webp"/><figcaption data-project-i18n="captionFive">機械結構與儀表設計</figcaption></figure>
+<figure class="wide"><img alt="秋季山丘與城鎮的戶外環境" loading="lazy" src="assets/my-time-machine/03.webp"/><figcaption data-project-i18n="captionThree">戶外環境與氛圍</figcaption></figure>
+<figure><img alt="駕駛艙儀表與座椅" loading="lazy" src="assets/my-time-machine/06.webp"/><figcaption data-project-i18n="captionSix">操作艙場景細節</figcaption></figure>
+<figure><img alt="角色在圖書館觀看鐘錶及黑板" loading="lazy" src="assets/my-time-machine/07.webp"/><figcaption data-project-i18n="captionSeven">敘事場景與光影</figcaption></figure>
+</div></section>
+<section aria-labelledby="process-heading" class="project-chapter" id="mtm-process"><div class="detail-section-heading"><span data-project-i18n="processHeading" id="process-heading">03 / 製作過程</span><span>01 — 03 / WORKFLOW</span></div><p class="process-copy" data-cn="從初期場景配置、時光機概念與建模，到模型拓樸和最佳化的製作紀錄。" data-en="Production documentation from early scene layout and time machine modeling to topology review and optimization.">從初期場景配置、時光機概念與建模，到模型拓樸和最佳化的製作紀錄。</p><div class="process-gallery"><figure><a aria-label="01｜前期場景配置與 Blockout" href="assets/my-time-machine/process/process-01.webp" rel="noopener noreferrer" target="_blank"><img alt="01｜前期場景配置與 Blockout" decoding="async" loading="lazy" src="assets/my-time-machine/process/process-01.webp"/></a><figcaption data-cn="01｜前期場景配置與 Blockout" data-en="01 | Early Scene Layout &amp; Blockout">01｜前期場景配置與 Blockout</figcaption></figure><figure><a aria-label="02｜時光機概念與模型發展" href="assets/my-time-machine/process/process-02.webp" rel="noopener noreferrer" target="_blank"><img alt="02｜時光機概念與模型發展" decoding="async" loading="lazy" src="assets/my-time-machine/process/process-02.webp"/></a><figcaption data-cn="02｜時光機概念與模型發展" data-en="02 | Time Machine Concept &amp; Modeling">02｜時光機概念與模型發展</figcaption></figure><figure><a aria-label="03｜模型拓樸與最佳化" href="assets/my-time-machine/process/process-03.webp" rel="noopener noreferrer" target="_blank"><img alt="03｜模型拓樸與最佳化" decoding="async" loading="lazy" src="assets/my-time-machine/process/process-03.webp"/></a><figcaption data-cn="03｜模型拓樸與最佳化" data-en="03 | Topology &amp; Model Optimization">03｜模型拓樸與最佳化</figcaption></figure></div></section>
+<section class="project-chapter" id="mtm-physical-model"><div class="detail-section-heading"><span data-cn="04 / 實體模型展示" data-en="04 / Physical Model Showcase">04 / 實體模型展示</span><span>PHYSICAL MODEL / COMPARISON</span></div><div class="physical-model-gallery"><figure><img src="assets/my-time-machine/physical-model/physical-model-comparison.webp" loading="lazy" decoding="async" alt="時光機實體模型：素模與完成品、模型細節並排比較"><figcaption data-cn="時光機實體模型 / 素模、塗裝完成品與細節" data-en="Physical Time Machine / Unpainted Model, Finished Model & Details">時光機實體模型 / 素模、塗裝完成品與細節</figcaption></figure></div></section>
+<a class="detail-back-bottom" data-project-i18n="back" href="#projects">← 返回專案列表</a>
+</section>
+<section aria-labelledby="detail-two-title" class="project-detail project-two-detail" hidden="" id="project-002">
+<div class="detail-top"><a class="detail-back-bottom" data-cn="← 返回專案列表" data-en="← Back to Projects" href="#projects">← 返回專案列表</a><span>ARCHIVE FILE / 002</span></div>
+<div class="detail-head"><p class="gallery-kicker">PROJECT FILE / 002</p><h2 data-cn="Robots In The Desert" data-en="Robots In The Desert" id="detail-two-title">Robots In The Desert</h2><div class="detail-role"><span data-cn="3D 動畫" data-en="3D Animation">3D 動畫</span></div></div>
+<figure class="detail-cover robot-project-keyvisual"><img alt="Robots In The Desert 專案主視覺：沙漠中的兩位機器人與橘色飛船" decoding="async" src="assets/robots-in-the-desert/ri-project-keyvisual.webp"/><figcaption data-cn="專案主視覺 / Key Visual" data-en="Project Key Visual">專案主視覺 / Key Visual</figcaption></figure>
+<div class="detail-info"><div><span class="detail-small" data-cn="MY ROLE / 我的職責" data-en="MY ROLE">MY ROLE / 我的職責</span><h3 data-cn="動畫、3D美術" data-en="Animation / 3D Art">動畫、3D美術</h3></div><p data-cn="本頁展示《Robots In The Desert》的動畫劇照與作品影片，包含沙漠環境、機器人角色及動畫場景。" data-en="A selection of animation stills and the project film from Robots In The Desert, featuring desert environments, robot characters, and cinematic scenes.">本頁展示《Robots In The Desert》的動畫劇照與作品影片，包含沙漠環境、機器人角色及動畫場景。</p></div>
+<div class="production-details software-only"><div><span class="detail-small" data-cn="SOFTWARE / 製作工具" data-en="SOFTWARE">SOFTWARE / 製作工具</span><div class="tools-list"><span>Maya</span><span>Substance Painter</span><span>Unreal Engine 5</span><span>Quixel Bridge</span></div></div></div>
+<section class="project-video"><div class="detail-section-heading"><span data-cn="PROJECT VIDEO / 作品影片" data-en="PROJECT VIDEO">PROJECT VIDEO / 作品影片</span></div><div class="video-shell" id="robot-video-shell"><button aria-label="播放 Robots In The Desert 作品影片" class="video-poster" id="robot-video-launch" type="button"><img alt="Robots In The Desert 影片封面" loading="lazy" src="assets/robots-in-the-desert/ri-01.webp"/><span class="video-poster-overlay"><span aria-hidden="true" class="video-play-icon">▶</span><span data-cn="播放作品影片" data-en="Play Project Video">播放作品影片</span></span></button></div><div class="video-actions"><span class="detail-small" data-cn="若嵌入播放器無法顯示，請在 YouTube 觀看。" data-en="If the embedded player is unavailable, watch on YouTube.">若嵌入播放器無法顯示，請在 YouTube 觀看。</span><a data-cn="在 YouTube 觀看 ↗" data-en="Watch on YouTube ↗" href="https://www.youtube.com/watch?v=OMTQ_LTU6BA&amp;t=5s" rel="noopener noreferrer" target="_blank">在 YouTube 觀看 ↗</a></div><figure class="robot-additional-video"><video controls playsinline preload="metadata" poster="assets/robots-in-the-desert/robots-additional-poster.webp" aria-label="Robots In The Desert 新增動畫片段"><source src="assets/robots-in-the-desert/robots-additional-clip.mp4" type="video/mp4">Your browser does not support HTML video.</video><figcaption data-cn="Robots In The Desert / 動畫片段" data-en="Robots In The Desert / Animation Clip">Robots In The Desert / 動畫片段</figcaption></figure></section>
+<nav aria-label="Project 002 sections" class="project-subnav"><a data-cn="動畫劇照" data-en="Animation Stills" href="#project-002-renders">動畫劇照</a><a data-cn="角色模型" data-en="Character Models" href="#project-002-characters">角色模型</a><a data-cn="遊戲設計" data-en="Game Design" href="#project-002-process">遊戲設計</a></nav>
+<section class="project-chapter" id="project-002-renders"><div class="detail-section-heading"><span data-cn="01 / 動畫劇照" data-en="01 / Animation Stills">01 / 動畫劇照</span><span>01 — 04 / FILM STILLS</span></div><div class="mtm-image-grid robot-stills"><figure class="wide"><a href="assets/robots-in-the-desert/ri-01.webp" rel="noopener noreferrer" target="_blank"><img alt="Robots In The Desert 動畫劇照 01" decoding="async" loading="lazy" src="assets/robots-in-the-desert/ri-01.webp"/></a><figcaption data-cn="動畫劇照 01" data-en="Animation Still 01">動畫劇照 01</figcaption></figure><figure class="wide"><a href="assets/robots-in-the-desert/ri-02.webp" rel="noopener noreferrer" target="_blank"><img alt="Robots In The Desert 動畫劇照 02" decoding="async" loading="lazy" src="assets/robots-in-the-desert/ri-02.webp"/></a><figcaption data-cn="動畫劇照 02" data-en="Animation Still 02">動畫劇照 02</figcaption></figure><figure class="wide"><a href="assets/robots-in-the-desert/ri-03.webp" rel="noopener noreferrer" target="_blank"><img alt="Robots In The Desert 動畫劇照 03" decoding="async" loading="lazy" src="assets/robots-in-the-desert/ri-03.webp"/></a><figcaption data-cn="動畫劇照 03" data-en="Animation Still 03">動畫劇照 03</figcaption></figure><figure class="wide"><a href="assets/robots-in-the-desert/ri-04.webp" rel="noopener noreferrer" target="_blank"><img alt="Robots In The Desert 動畫劇照 04" decoding="async" loading="lazy" src="assets/robots-in-the-desert/ri-04.webp"/></a><figcaption data-cn="動畫劇照 04" data-en="Animation Still 04">動畫劇照 04</figcaption></figure></div></section>
+<section class="project-chapter" id="project-002-characters"><div class="detail-section-heading"><span data-cn="02 / 角色模型" data-en="02 / Character Models">02 / 角色模型</span><span>CHARACTER / 001</span></div>
+<div class="character-group"><h3 data-cn="機器人 / Robots" data-en="Robots">機器人 / Robots</h3><p class="character-note" data-cn="角色材質展示、模型結構、布線展示與 Rigging 控制紀錄。" data-en="Character material showcases, modeling structure, wireframe review, and rigging controls.">角色材質展示、模型結構、布線展示與 Rigging 控制紀錄。</p>
+<div class="character-grid robot-new-gallery"><figure class="wide"><a href="assets/robots-in-the-desert/characters/robot-gallery-01.webp" rel="noopener noreferrer" target="_blank"><img alt="01 / 機器人材質與細節展示" decoding="async" loading="lazy" src="assets/robots-in-the-desert/characters/robot-gallery-01.webp"/></a><figcaption data-cn="01 / 機器人材質與細節展示" data-en="01 / Robot Materials &amp; Details">01 / 機器人材質與細節展示</figcaption></figure><figure class="wide"><a href="assets/robots-in-the-desert/characters/robot-gallery-02.webp" rel="noopener noreferrer" target="_blank"><img alt="02 / 角色材質展示與 Rigging" decoding="async" loading="lazy" src="assets/robots-in-the-desert/characters/robot-gallery-02.webp"/></a><figcaption data-cn="02 / 角色材質展示與 Rigging" data-en="02 / Character Materials &amp; Rigging">02 / 角色材質展示與 Rigging</figcaption></figure><figure class="wide"><a href="assets/robots-in-the-desert/characters/robot-gallery-03.webp" rel="noopener noreferrer" target="_blank"><img alt="03 / 夥伴機器人外觀" decoding="async" loading="lazy" src="assets/robots-in-the-desert/characters/robot-gallery-03.webp"/></a><figcaption data-cn="03 / 夥伴機器人外觀" data-en="03 / Companion Robot Materials">03 / 夥伴機器人外觀</figcaption></figure></div></div>
+<div class="character-group"><h3 data-cn="模型布線與 Rigging" data-en="Wireframe &amp; Rigging">模型布線與 Rigging</h3><p class="character-note" data-cn="兩段短片為模型布線及關節控制展示，點擊播放以節省流量。" data-en="Two short clips demonstrate the wireframe and joint controls. Play on demand to save bandwidth.">兩段短片為模型布線及關節控制展示，點擊播放以節省流量。</p><div class="character-video-grid">
+<figure><video aria-label="Robot wireframe" controls="" playsinline="" poster="assets/robots-in-the-desert/characters/robot-wireframe-poster.webp" preload="metadata"><source src="assets/robots-in-the-desert/characters/robot-wireframe.mp4" type="video/mp4"/></video><figcaption data-cn="模型布線與拓樸" data-en="Wireframe &amp; Topology">模型布線與拓樸</figcaption></figure>
+<figure><video aria-label="Robot rigging controls" controls="" playsinline="" poster="assets/robots-in-the-desert/characters/robot-rigging-poster.webp" preload="metadata"><source src="assets/robots-in-the-desert/characters/robot-rigging.mp4" type="video/mp4"/></video><figcaption data-cn="Rigging 關節與控制器" data-en="Rigging Joints &amp; Controls">Rigging 關節與控制器</figcaption></figure>
+</div></div>
+<div class="character-group"><h3 data-cn="飛船 / Spaceship" data-en="Spaceship">飛船 / Spaceship</h3><p class="character-note" data-cn="飛船材質展示、灰模檢視、布線與 Rigging 設定。" data-en="Spaceship material showcases, clay-model inspection, wireframe views, and rigging controls.">飛船材質展示、灰模檢視、布線與 Rigging 設定。</p>
+<div class="character-grid spaceship-gallery"><figure class="wide"><a href="assets/robots-in-the-desert/spaceship/spaceship-materials.webp" rel="noopener noreferrer" target="_blank"><img alt="01 / 飛船材質展示與細節" decoding="async" loading="lazy" src="assets/robots-in-the-desert/spaceship/spaceship-materials.webp"/></a><figcaption data-cn="01 / 飛船材質展示與細節" data-en="01 / Spaceship Materials &amp; Details">01 / 飛船材質展示與細節</figcaption></figure><figure class="wide"><a href="assets/robots-in-the-desert/spaceship/spaceship-clay.webp" rel="noopener noreferrer" target="_blank"><img alt="02 / 飛船灰模與結構" decoding="async" loading="lazy" src="assets/robots-in-the-desert/spaceship/spaceship-clay.webp"/></a><figcaption data-cn="02 / 飛船灰模與結構" data-en="02 / Spaceship Clay Model &amp; Structure">02 / 飛船灰模與結構</figcaption></figure></div></div>
+<div class="character-group"><h3 data-cn="飛船布線與 Rigging" data-en="Spaceship Wireframe &amp; Rigging">飛船布線與 Rigging</h3><p class="character-note" data-cn="兩支短片展示飛船布線與 Rigging，播放前即可看到影片封面。" data-en="Two short clips show the spaceship wireframe and rigging, with visible posters before playback.">兩支短片展示飛船布線與 Rigging，播放前即可看到影片封面。</p><div class="character-video-grid spaceship-media-grid">
+<figure><video aria-label="Spaceship wireframe preview" controls="" playsinline="" poster="assets/robots-in-the-desert/spaceship/spaceship-wireframe-poster.webp" preload="metadata"><source src="assets/robots-in-the-desert/spaceship/spaceship-wireframe.mp4" type="video/mp4"/></video><figcaption data-cn="模型布線 / Wireframe" data-en="Wireframe">模型布線 / Wireframe</figcaption></figure>
+<figure><video aria-label="Spaceship rigging preview" controls="" playsinline="" poster="assets/robots-in-the-desert/spaceship/spaceship-rigging-poster.webp" preload="metadata"><source src="assets/robots-in-the-desert/spaceship/spaceship-rigging.mp4" type="video/mp4"/></video><figcaption data-cn="Rigging 控制器預覽" data-en="Rigging Controls Preview">Rigging 控制器預覽</figcaption></figure>
+</div></div></section>
+<section class="project-chapter game-design-chapter" id="project-002-process">
+<div class="detail-section-heading"><span data-cn="03 / 遊戲設計" data-en="03 / Game Design">03 / 遊戲設計</span><span>GAME EXPERIMENT / 001</span></div>
+<p class="character-note" data-cn="將《Robots In The Desert》動畫作品中的部分既有資產重新運用，透過自學遊戲開發，實作成一款簡單的小遊戲。這段實驗記錄了從動畫資產延伸至可互動體驗的嘗試。" data-en="I repurposed selected assets from the Robots In The Desert animation and taught myself game development to create a simple playable game. This experiment explores turning assets made for animation into an interactive experience.">將《Robots In The Desert》動畫作品中的部分既有資產重新運用，透過自學遊戲開發，實作成一款簡單的小遊戲。這段實驗記錄了從動畫資產延伸至可互動體驗的嘗試。</p>
+<figure class="gameplay-video"><video aria-label="The World of the Little Robot gameplay video" controls="" playsinline="" poster="assets/robots-in-the-desert/game/little-robot-poster.webp" preload="metadata"><source src="assets/robots-in-the-desert/game/little-robot-gameplay.mp4" type="video/mp4"/><span data-cn="你的瀏覽器不支援影片播放。" data-en="Your browser does not support video playback.">你的瀏覽器不支援影片播放。</span></video><figcaption data-cn="The World of the Little Robot / 遊戲實作展示" data-en="The World of the Little Robot / Game Prototype Showcase">The World of the Little Robot / 遊戲實作展示</figcaption></figure>
+</section>
+<a class="detail-back-bottom" data-cn="← 返回專案列表" data-en="← Back to Projects" href="#projects">← 返回專案列表</a>
+</section>
+<section aria-labelledby="detail-three-title" class="project-detail project-two-detail" hidden="" id="project-003">
+<div class="detail-top"><a class="detail-back-bottom" data-cn="← 返回專案列表" data-en="← Back to Projects" href="#projects">← 返回專案列表</a><span>ARCHIVE FILE / 003</span></div>
+<div class="detail-head"><p class="gallery-kicker">PROJECT FILE / 003</p><h2 data-cn="虛擬偶像製作" data-en="Virtual Idol Production" id="detail-three-title">虛擬偶像製作</h2><div class="detail-role"><span data-cn="動畫 MV 製作" data-en="Animated Music Video Production">動畫 MV 製作</span></div></div>
+<figure class="detail-cover"><img alt="虛擬偶像 MV 主視覺" loading="lazy" src="assets/virtual-idol/05.webp"/><figcaption data-cn="專案主視覺 / Key Visual" data-en="Project Key Visual">專案主視覺 / Key Visual</figcaption></figure>
+<div class="detail-info"><div><span class="detail-small" data-cn="PROJECT BACKGROUND / 專案背景" data-en="PROJECT BACKGROUND">PROJECT BACKGROUND / 專案背景</span><h3 data-cn="2022 夢想動畫實習作品" data-en="2022 Internship Project">2022 夢想動畫實習作品</h3></div><p data-cn="2022 年於夢想動畫實習期間，使用 Unreal Engine、Maya 與 Houdini 參與製作兩部動畫 MV。個人具體負責項目待補充。" data-en="During a 2022 internship at MoonShine Animation, contributed to the production of two animated music videos using Unreal Engine, Maya, and Houdini. Specific individual responsibilities will be added later.">2022 年於夢想動畫實習期間，使用 Unreal Engine、Maya 與 Houdini 參與製作兩部動畫 MV。個人具體負責項目待補充。</p></div>
+<div class="production-details software-only"><div><span class="detail-small" data-cn="SOFTWARE / 製作工具" data-en="SOFTWARE">SOFTWARE / 製作工具</span><div class="tools-list"><span>Unreal Engine</span><span>Maya</span><span>Houdini</span></div></div></div>
+<nav aria-label="Project 003 sections" class="project-subnav"><a data-cn="動畫 MV 01" data-en="Animated MV 01" href="#project-003-mv01">動畫 MV 01</a><a data-cn="製作流程" data-en="Production Process" href="#project-003-stills">製作流程</a><a data-cn="Material 製作" data-en="Material Development" href="#project-003-material">Material 製作</a></nav>
+<section class="project-chapter" id="project-003-mv01"><div class="detail-section-heading"><span data-cn="01 / 動畫 MV" data-en="01 / Animated MV">01 / 動畫 MV</span></div><h3 class="idol-clip-heading mv-title" data-cn="虛擬偶像 - Quinn" data-en="Virtual Idol - Quinn">虛擬偶像 - Quinn</h3><figure class="idol-video"><video aria-label="Idolgirl Final" controls="" playsinline="" poster="assets/virtual-idol/idolgirl-final-poster.webp" preload="metadata"><source src="assets/virtual-idol/idolgirl-final.mp4" type="video/mp4"/>Your browser does not support HTML video.</video><figcaption data-cn="Idol Quinn / 動畫 MV 片段" data-en="Idol Quinn / Animated MV Clip">Idol Quinn / 動畫 MV 片段</figcaption></figure><p class="idol-link"><a data-cn="點擊轉往完整動畫片MV ↗" data-en="Watch the Full Animated MV ↗" href="https://www.youtube.com/watch?v=NAKUqrwygSw" rel="noopener noreferrer" target="_blank">點擊轉往完整動畫片MV ↗</a></p>
+<h3 class="idol-clip-heading mv-title" data-cn="虛擬偶像 - Theo" data-en="Virtual Idol - Theo">虛擬偶像 - Theo</h3>
+<figure class="idol-video"><video aria-label="Ball Boy 動畫 MV" controls="" playsinline="" poster="assets/virtual-idol/ball-boy-poster.webp" preload="metadata"><source src="assets/virtual-idol/ball-boy.mp4" type="video/mp4"/><span data-cn="你的瀏覽器不支援影片播放。" data-en="Your browser does not support HTML video.">你的瀏覽器不支援影片播放。</span></video><figcaption data-cn="Idol Theo / 動畫 MV 片段" data-en="Idol Theo / Animated MV Clip">Idol Theo / 動畫 MV 片段</figcaption></figure><p class="idol-link"><a data-cn="點擊轉往完整動畫片MV ↗" data-en="Watch the Full Animated MV ↗" href="https://www.youtube.com/watch?v=v2vIDnu5Kmo" rel="noopener noreferrer" target="_blank">點擊轉往完整動畫片MV ↗</a></p></section>
+<section class="project-chapter" id="project-003-stills"><div class="detail-section-heading"><span data-cn="02 / 製作流程" data-en="02 / Production Process">02 / 製作流程</span></div><div class="idol-process-intro"><h3 data-cn="視覺概念與場景還原" data-en="Visual Development &amp; Scene Realization">視覺概念與場景還原</h3><p data-cn="製作期間，我與副導演持續溝通視覺方向，將導演腦海中的構想轉化為具體的場景配置、燈光氛圍與影像畫面，透過反覆調整逐步還原預期的視覺效果。" data-en="During production, I collaborated closely with the assistant director to translate the director’s vision into tangible scene layouts, lighting, and imagery, refining the visuals through multiple iterations to realize the intended look.">製作期間，我與副導演持續溝通視覺方向，將導演腦海中的構想轉化為具體的場景配置、燈光氛圍與影像畫面，透過反覆調整逐步還原預期的視覺效果。</p></div><div class="idol-stills idol-process-grid"><figure class="idol-gallery-image"><a href="assets/virtual-idol/01.webp" rel="noopener noreferrer" target="_blank"><img alt="01 / 導演概念3D圖" decoding="async" loading="lazy" src="assets/virtual-idol/01.webp"/></a><figcaption data-cn="01 / 導演概念3D圖" data-en="01 / Director’s 3D Concept">01 / 導演概念3D圖</figcaption></figure><figure class="idol-gallery-image"><a href="assets/virtual-idol/02.webp" rel="noopener noreferrer" target="_blank"><img alt="02 / Unreal 基礎建構" decoding="async" loading="lazy" src="assets/virtual-idol/02.webp"/></a><figcaption data-cn="02 / Unreal 基礎建構" data-en="02 / Unreal Engine Base Construction">02 / Unreal 基礎建構</figcaption></figure><figure class="idol-gallery-image"><a href="assets/virtual-idol/03.webp" rel="noopener noreferrer" target="_blank"><img alt="03 / 場景與特效製作" decoding="async" loading="lazy" src="assets/virtual-idol/03.webp"/></a><figcaption data-cn="03 / 場景與特效製作" data-en="03 / Scene &amp; VFX Production">03 / 場景與特效製作</figcaption></figure><figure class="idol-gallery-image"><a href="assets/virtual-idol/04.webp" rel="noopener noreferrer" target="_blank"><img alt="04 / 場景整合完成" decoding="async" loading="lazy" src="assets/virtual-idol/04.webp"/></a><figcaption data-cn="04 / 場景整合完成" data-en="04 / Final Scene Integration">04 / 場景整合完成</figcaption></figure></div></section>
+<section class="project-chapter" id="project-003-material"><div class="detail-section-heading"><span data-cn="03 / Material 製作" data-en="03 / Material Development">03 / Material 製作</span></div><p class="character-note" data-cn="展示材質節點、光軌效果測試與場景製作畫面。" data-en="Material nodes, light-trail effect tests, and scene development views.">展示材質節點、光軌效果測試與場景製作畫面。</p><div class="idol-stills"><figure class="idol-gallery-image"><a href="assets/virtual-idol/tunnel-scene.webp" rel="noopener noreferrer" target="_blank"><img alt="虛擬偶像 MV 隧道場景畫面" decoding="async" loading="lazy" src="assets/virtual-idol/tunnel-scene.webp"/></a><figcaption data-cn="場景展示 / 隧道畫面" data-en="Scene Showcase / Tunnel Environment">場景展示 / 隧道畫面</figcaption></figure><figure class="idol-gallery-image"><a href="assets/virtual-idol/material-01.webp" rel="noopener noreferrer" target="_blank"><img alt="Material / 光軌材質節點 01" decoding="async" loading="lazy" src="assets/virtual-idol/material-01.webp"/></a><figcaption data-cn="Material / 光軌材質節點 01" data-en="Material / Light Trail Shader 01">Material / 光軌材質節點 01</figcaption></figure><figure class="idol-gallery-image"><a href="assets/virtual-idol/material-02.webp" rel="noopener noreferrer" target="_blank"><img alt="Material / 光軌材質節點 02" decoding="async" loading="lazy" src="assets/virtual-idol/material-02.webp"/></a><figcaption data-cn="Material / 光軌材質節點 02" data-en="Material / Light Trail Shader 02">Material / 光軌材質節點 02</figcaption></figure></div><h3 data-cn="光軌效果影片" data-en="Light Trail Effect Video">光軌效果影片</h3><figure class="idol-video"><video aria-label="Light Trail Effect" controls="" playsinline="" poster="assets/virtual-idol/trail-demo-poster.webp" preload="metadata"><source src="assets/virtual-idol/trail-demo.mp4" type="video/mp4"/>Your browser does not support HTML video.</video></figure></section>
+<a class="detail-back-bottom" data-cn="← 返回專案列表" data-en="← Back to Projects" href="#projects">← 返回專案列表</a>
+</section>
+<section aria-labelledby="detail-four-title" class="project-detail project-two-detail" hidden="" id="project-004">
+<div class="detail-top"><a class="detail-back-bottom" data-cn="← 返回專案列表" data-en="← Back to Projects" href="#projects">← 返回專案列表</a><span>ARCHIVE FILE / 004</span></div>
+<div class="detail-head"><p class="gallery-kicker">PROJECT FILE / 004</p><h2 data-cn="角色設計與動態捕捉" data-en="Character Design &amp; Motion Capture" id="detail-four-title">角色設計與動態捕捉</h2><div class="detail-role"><span data-cn="角色設計 · 3D 製作 · 2024" data-en="Character Design · 3D Production · 2024">角色設計 · 3D 製作 · 2024</span></div></div><figure class="detail-cover aka-key-visual"><img alt="AKA 00 / Project Key Visual" decoding="async" loading="lazy" src="assets/character-aka/new-00.webp"/><figcaption data-cn="00 / 專案主視覺" data-en="00 / Project Key Visual">00 / 專案主視覺</figcaption></figure>
+<section aria-label="AKA video" class="project-chapter aka-video-first"><div class="detail-section-heading"><span data-cn="01 / 角色動畫展示" data-en="01 / Character Animation Showcase">01 / 角色動畫展示</span></div><figure class="aka-video"><video aria-label="AKA 角色動畫展示" controls="" playsinline="" poster="assets/character-aka/aka-performance-poster.webp" preload="metadata"><source src="assets/character-aka/aka-performance.mp4" type="video/mp4"/>Your browser does not support HTML video.</video><figcaption data-cn="AKA / 動畫展示片段" data-en="AKA / Animation Showcase Clip">AKA / 動畫展示片段</figcaption></figure>
+<div class="detail-section-heading" style="margin-top:36px"><span data-cn="02 / Turn Table 角色旋轉展示" data-en="02 / Character Turntable">02 / Turn Table 角色旋轉展示</span></div>
+<figure class="aka-video"><video aria-label="AKA Turn Table 角色展示" controls="" playsinline="" poster="assets/character-aka/aka-turntable-poster.webp" preload="metadata"><source src="assets/character-aka/aka-turntable.mp4" type="video/mp4"/>Your browser does not support HTML video.</video><figcaption data-cn="AKA / 角色旋轉展示影片" data-en="AKA / Character Turntable Clip">AKA / 角色旋轉展示影片</figcaption></figure>
+</section>
+<div class="detail-info"><div><span class="detail-small" data-cn="PROJECT BACKGROUND / 專案背景" data-en="PROJECT BACKGROUND">PROJECT BACKGROUND / 專案背景</span><h3 data-cn="2024 / AKA 角色專案" data-en="2024 / AKA Character Project">2024 / AKA 角色專案</h3></div><p data-cn="與學術單位合作的虛擬直播節目角色專案，負責角色草圖設計、3D 建模與骨架綁定，後續將角色匯入 Unreal Engine 5，進行即時渲染與節目動畫製作。" data-en="A virtual livestreaming character project created in collaboration with an academic department. My work covered character sketches, 3D modeling and rigging, followed by integration into Unreal Engine 5 for real-time rendering and broadcast animation.">與學術單位合作的虛擬直播節目角色專案，負責角色草圖設計、3D 建模與骨架綁定，後續將角色匯入 Unreal Engine 5，進行即時渲染與節目動畫製作。</p></div>
+<div class="production-details software-only"><div><span class="detail-small" data-cn="SOFTWARE / 製作工具" data-en="SOFTWARE">SOFTWARE / 製作工具</span><div class="tools-list"><span>Maya</span><span>ZBrush</span><span>Substance Painter</span><span>Unreal Engine 5</span><span>Xsens</span></div></div></div>
+<nav aria-label="Project 004 sections" class="project-subnav"><a data-cn="概念探索" data-en="Concept Development" href="#project-004-process">概念探索</a></nav>
+<section class="project-chapter" id="project-004-process"><div class="detail-section-heading"><span data-cn="03 / 概念探索" data-en="03 / Concept Development">03 / 概念探索</span></div><p class="character-note" data-cn="兩支影片以 1:1 方形並排展示，下方依 01–07 順序呈現角色概念圖。" data-en="Two videos are shown side by side in a 1:1 square format, followed by character concept artwork 01–07.">兩支影片以 1:1 方形並排展示，下方依 01–07 順序呈現角色概念圖。</p><div class="aka-grid"><div class="aka-media-row"><figure class="aka-video-card"><video aria-label="AKA 角色動畫展示" controls="" playsinline="" poster="assets/character-aka/aka-performance-poster.webp" preload="metadata"><source src="assets/character-aka/aka-performance.mp4" type="video/mp4"/>Your browser does not support HTML video.</video><figcaption data-cn="影片 A / 動畫展示片段" data-en="Video A / Animation Showcase Clip">影片 A / 動畫展示片段</figcaption></figure><figure class="aka-video-card"><video aria-label="AKA Turn Table 角色展示" controls="" playsinline="" poster="assets/character-aka/aka-turntable-poster.webp" preload="metadata"><source src="assets/character-aka/aka-turntable.mp4" type="video/mp4"/>Your browser does not support HTML video.</video><figcaption data-cn="影片 B / 角色旋轉展示影片" data-en="Video B / Character Turntable Clip">影片 B / 角色旋轉展示影片</figcaption></figure></div><figure class="aka-figure"><img alt="AKA 01 / Early Character Studies" decoding="async" loading="lazy" src="assets/character-aka/new-01.webp"/><figcaption data-cn="01 / 設計草圖與造型探索" data-en="01 / Early Character Studies">01 / 設計草圖與造型探索</figcaption></figure><figure class="aka-figure"><img alt="AKA 02 / Character Equipment Studies" decoding="async" loading="lazy" src="assets/character-aka/new-02.webp"/><figcaption data-cn="02 / 角色裝備設計" data-en="02 / Character Equipment Studies">02 / 角色裝備設計</figcaption></figure><figure class="aka-figure"><img alt="AKA 03 / Character Structure Sketches" decoding="async" loading="lazy" src="assets/character-aka/new-03.webp"/><figcaption data-cn="03 / 角色結構草圖" data-en="03 / Character Structure Sketches">03 / 角色結構草圖</figcaption></figure><figure class="aka-figure"><img alt="AKA 04 / Character Design and Color Studies" decoding="async" loading="lazy" src="assets/character-aka/new-04.webp"/><figcaption data-cn="04 / 角色造型與配色試驗" data-en="04 / Character Design and Color Studies">04 / 角色造型與配色試驗</figcaption></figure><figure class="aka-figure"><img alt="AKA 05 / Character Color Exploration" decoding="async" loading="lazy" src="assets/character-aka/new-05.webp"/><figcaption data-cn="05 / 角色配色探索" data-en="05 / Character Color Exploration">05 / 角色配色探索</figcaption></figure><figure class="aka-figure"><img alt="AKA 06 / Character Design References" decoding="async" loading="lazy" src="assets/character-aka/new-06.webp"/><figcaption data-cn="06 / 角色設計參考" data-en="06 / Character Design References">06 / 角色設計參考</figcaption></figure><figure class="aka-figure"><img alt="AKA 07 / Final Colors and Model Comparison" decoding="async" loading="lazy" src="assets/character-aka/new-07.webp"/><figcaption data-cn="07 / 角色配色定案與模型對照" data-en="07 / Final Colors and Model Comparison">07 / 角色配色定案與模型對照</figcaption></figure></div></section><a class="detail-back-bottom" data-cn="← 返回專案列表" data-en="← Back to Projects" href="#projects">← 返回專案列表</a></section>
+<section aria-labelledby="project-contact-heading" class="project-contact" hidden="" id="project-contact">
+<p class="tag" data-cn="CONTACT / 聯絡方式" data-en="CONTACT">CONTACT / 聯絡方式</p>
+<h2 data-cn="聯絡方式" data-en="Contact" id="project-contact-heading">聯絡方式</h2>
+<p class="creator-profile-intro" data-cn="歡迎透過以下平台與我聯絡或查看我的作品。" data-en="Feel free to reach out or explore my work through the links below.">歡迎透過以下平台與我聯絡或查看我的作品。</p>
+<div class="creator-contact-list">
+<a href="mailto:Allenlinph@gmail.com"><span>GMAIL</span><strong>Allenlinph@gmail.com</strong><span aria-hidden="true">↗</span></a>
+<a href="https://www.artstation.com/allen_linbh" rel="noopener noreferrer" target="_blank"><span>ARTSTATION</span><strong>artstation.com/allen_linbh</strong><span aria-hidden="true">↗</span></a>
+<a href="https://www.linkedin.com/in/allenpolin" rel="noopener noreferrer" target="_blank"><span>LINKEDIN</span><strong>linkedin.com/in/allenpolin</strong><span aria-hidden="true">↗</span></a>
+</div>
+</section>
+<section aria-labelledby="creator-about-heading" class="creator-profile" id="about">
+<div class="creator-about-layout">
+<figure class="creator-about-portrait"><img alt="Allen Lin 的手繪角色頭像" decoding="async" loading="lazy" src="assets/creator/me.webp"><figcaption>PERSONAL AVATAR / ALLEN LIN</figcaption></img></figure>
+<div class="creator-about-copy">
+<p class="tag" data-cn="ABOUT / 創作者檔案" data-en="ABOUT / CREATOR PROFILE">ABOUT / 創作者檔案</p>
+<h2 id="creator-about-heading">Allen Lin</h2>
+<p class="creator-about-role">3D Artist <span aria-hidden="true">/</span> Aspiring Technical Artist</p>
+<p data-cn="我是一位來自台灣的 3D 美術創作者，目前正朝技術美術（Technical Artist）的方向持續探索與成長。" data-en="I'm a 3D artist from Taiwan, currently developing my skills and pursuing a career as a Technical Artist.">我是一位來自台灣的 3D 美術創作者，目前正朝技術美術（Technical Artist）的方向持續探索與成長。</p>
+<p data-cn="從 VR 動畫《我的時光機》的 2D 概念設計與 3D 場景製作，到《Robots In The Desert》的動畫與互動遊戲實作，以及夢想動畫實習期間參與虛擬偶像 MV 製作，這些經驗讓我逐漸建立橫跨 2D 美術、3D 製作與即時引擎應用的創作能力。" data-en="My experience includes 2D concept art and 3D environments for the VR animation My Time Machine, animation and an interactive game experiment for Robots In The Desert, and virtual idol music video production during my internship at MoonShine Animation. These projects helped me connect 2D art, 3D production, and real-time engines.">從 VR 動畫《我的時光機》的 2D 概念設計與 3D 場景製作，到《Robots In The Desert》的動畫與互動遊戲實作，以及夢想動畫實習期間參與虛擬偶像 MV 製作，這些經驗讓我逐漸建立橫跨 2D 美術、3D 製作與即時引擎應用的創作能力。</p>
+<p data-cn="我持續學習 Unreal Engine、Unity、Shader 與互動開發，希望結合美術感受力和技術實作，在藝術與工程之間建立連結。" data-en="I continue exploring Unreal Engine, Unity, shaders, and interactive development. My goal is to bridge artistic ideas and technical implementation through expressive, interactive experiences.">我持續學習 Unreal Engine、Unity、Shader 與互動開發，希望結合美術感受力和技術實作，在藝術與工程之間建立連結。</p>
+</div>
+</div>
+<section aria-labelledby="creator-skills-heading" class="creator-skills" id="creator-skills">
+<div class="skills-heading"><span class="skills-kicker">SKILL ARCHIVE / 013</span><h3 data-cn="技能與製作工具" data-en="Skills &amp; Tools" id="creator-skills-heading">技能與製作工具</h3><p data-cn="從 3D 製作到即時引擎、視覺設計與互動開發，以下是我的常用創作工具。" data-en="A selection of tools I use across 3D production, real-time engines, visual design and interactive development.">從 3D 製作到即時引擎、視覺設計與互動開發，以下是我的常用創作工具。</p></div>
+<div class="skill-groups">
+<section class="skill-category"><div class="skill-category-heading"><span>01</span><div><h4 data-cn="3D 製作" data-en="3D PRODUCTION">3D 製作</h4><small>3D PRODUCTION</small></div></div><div class="skill-items">
+<div class="skill-item"><span class="skill-icon"><img alt="Maya icon" data-local="assets/skills/maya.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg" width="64"/></span><span>Maya</span></div>
+<div class="skill-item"><span class="skill-icon"><img alt="Blender icon" data-local="assets/skills/blender.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" width="64"/></span><span>Blender</span></div>
+<div class="skill-item"><span class="skill-icon"><img alt="ZBrush icon" data-local="assets/skills/zbrush.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/zbrush/zbrush-original.svg" width="64"/></span><span>ZBrush</span></div>
+</div></section>
+<section class="skill-category"><div class="skill-category-heading"><span>02</span><div><h4 data-cn="遊戲引擎" data-en="GAME ENGINES">遊戲引擎</h4><small>GAME ENGINES</small></div></div><div class="skill-items">
+<div class="skill-item"><span class="skill-icon icon-contrast"><img alt="Unreal Engine icon" data-local="assets/skills/unreal.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/unreal.png" width="64"/></span><span>Unreal Engine</span></div>
+<div class="skill-item"><span class="skill-icon icon-contrast"><img alt="Unity icon" data-local="assets/skills/unity.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/unity.png" width="64"/></span><span>Unity</span></div>
+</div></section>
+<section class="skill-category"><div class="skill-category-heading"><span>03</span><div><h4 data-cn="材質製作" data-en="MATERIAL &amp; TEXTURING">材質製作</h4><small>MATERIAL &amp; TEXTURING</small></div></div><div class="skill-items">
+<div class="skill-item"><span class="skill-icon"><img alt="Substance 3D Painter icon" data-local="assets/skills/painter.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/painter.png" width="64"/></span><span>Substance 3D Painter</span></div>
+<div class="skill-item"><span class="skill-icon"><img alt="Substance 3D Designer icon" data-local="assets/skills/designer.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/designer.png" width="64"/></span><span>Substance 3D Designer</span></div>
+</div></section>
+<section class="skill-category"><div class="skill-category-heading"><span>04</span><div><h4 data-cn="影像後製" data-en="POST PRODUCTION">影像後製</h4><small>POST PRODUCTION</small></div></div><div class="skill-items">
+<div class="skill-item"><span class="skill-icon"><img alt="Premiere Pro icon" data-local="assets/skills/premiere.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/premiere.png" width="64"/></span><span>Premiere Pro</span></div>
+<div class="skill-item"><span class="skill-icon"><img alt="After Effects icon" data-local="assets/skills/aftereffects.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/aftereffects.png" width="64"/></span><span>After Effects</span></div>
+</div></section>
+<section class="skill-category"><div class="skill-category-heading"><span>05</span><div><h4 data-cn="2D 設計" data-en="2D DESIGN">2D 設計</h4><small>2D DESIGN</small></div></div><div class="skill-items">
+<div class="skill-item"><span class="skill-icon"><img alt="Illustrator icon" data-local="assets/skills/illustrator.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/illustrator.png" width="64"/></span><span>Illustrator</span></div>
+<div class="skill-item"><span class="skill-icon"><img alt="Photoshop icon" data-local="assets/skills/photoshop.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/photoshop.png" width="64"/></span><span>Photoshop</span></div>
+</div></section>
+<section class="skill-category"><div class="skill-category-heading"><span>06</span><div><h4 data-cn="開發與互動" data-en="DEVELOPMENT &amp; INTERACTIVE">開發與互動</h4><small>DEVELOPMENT &amp; INTERACTIVE</small></div></div><div class="skill-items">
+<div class="skill-item"><span class="skill-icon"><img alt="Git icon" data-local="assets/skills/git.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" width="64"/></span><span>Git</span></div>
+<div class="skill-item"><span class="skill-icon"><img alt="TouchDesigner icon" data-local="assets/skills/touchdesigner.png" decoding="async" height="64" loading="lazy" onerror="this.onerror=null;this.src=this.dataset.local" src="assets/skills/touchdesigner.png" width="64"/></span><span>TouchDesigner</span></div>
+</div></section>
+</div>
+<p class="skill-footnote" data-cn="技能分類依工作流程整理，不代表熟練度排名。" data-en="Tools are grouped by workflow, not ranked by proficiency.">技能分類依工作流程整理，不代表熟練度排名。</p>
+</section>
+<div class="creator-contact-after-skills" id="home-contact">
+<p class="tag" data-cn="關於 / 創作者檔案" data-en="ABOUT / CREATOR PROFILE">關於 / 創作者檔案</p>
+<h2 data-cn="聯絡方式" data-en="Contact" id="creator-profile-heading">聯絡方式</h2>
+<p class="creator-profile-intro" data-cn="歡迎透過以下平台與我聯絡或查看我的作品。" data-en="Feel free to reach out or explore my work through the links below.">歡迎透過以下平台與我聯絡或查看我的作品。</p>
+<div class="creator-contact-list">
+<a href="mailto:Allenlinph@gmail.com"><span>GMAIL</span><strong>Allenlinph@gmail.com</strong><span aria-hidden="true">↗</span></a>
+<a href="https://www.artstation.com/allen_linbh" rel="noopener noreferrer" target="_blank"><span>ARTSTATION</span><strong>artstation.com/allen_linbh</strong><span aria-hidden="true">↗</span></a>
+<a href="https://www.linkedin.com/in/allenpolin" rel="noopener noreferrer" target="_blank"><span>LINKEDIN</span><strong>linkedin.com/in/allenpolin</strong><span aria-hidden="true">↗</span></a>
+</div>
+</div>
+<button class="plain" id="replay">↺ REPLAY INTRO</button>
+</section></div></main>
+<script>
+(()=>{'use strict';const $=id=>document.getElementById(id);const card=$('card'),slot=$('slot'),status=$('status'),sub=$('substatus'),log=$('log'),hint=$('hint');let phase='idle',started=false,pointer=null,origin=null,sound=true,audio=null,language='zh';const zh={"SOUND: OFF": "音效：關", "SOUND: ON": "音效：開", "SKIP INTRO →": "跳過開場 →", "ARCHIVE ACCESS TERMINAL · PROTOTYPE 02": "檔案存取終端機 · 原型 02", "TERMINAL / 01": "終端機 / 01", "SYS // CREATOR INTERFACE": "系統 // 創作者介面", "00-STANDBY": "00-待機", "01-DETECTED": "01-已偵測", "02-BOOT": "02-啟動", "03-INDEX": "03-索引", "04-VERIFY": "04-驗證", "05-READY": "05-就緒", "SYSTEM OFFLINE": "系統離線", "NO MEMORY CARD": "未偵測到記憶卡", "INSERT AUTHORIZED MEMORY UNIT": "請插入授權記憶卡", "AWAITING USER INPUT _": "等待使用者操作 _", "PWR": "電源", "LINK": "連線", "READ": "讀取", "▼ MEMORY INPUT ▼": "▼ 記憶卡插槽 ▼", "01 / MEMORY INPUT": "01 / 記憶卡輸入", "ARCHIVE": "檔案庫", "DATA PORT-01": "資料埠-01", "REV. 198X": "版本 198X", "CREATOR DATA UNIT": "創作者資料模組", "MEMORY / 01": "記憶卡 / 01", "PERSONAL ARCHIVE": "個人作品檔案", "CLICK OR DRAG CARD TO INSERT": "點擊或拖曳記憶卡以插入", "DESKTOP: CLICK / DRAG · MOBILE: TAP · SKIP AVAILABLE": "電腦：點擊／拖曳 · 手機：點擊 · 可跳過", "PROJECTS": "作品", "ABOUT": "關於", "CONTACT": "聯絡", "● CREATOR ARCHIVE / ONLINE": "● 創作者檔案庫 / 已連線", "ALLEN'S PORTFOLIO": "Allen's Portfolio", "ALLEN'S ART BASE": "ALLEN'S ART BASE", "Welcome to Allen's Creative Base": "歡迎來到 Allen 的創作基地", "Game Development · 3D Art · Technical Art": "遊戲開發 · 3D 美術 · 技術美術", "VIEW PROJECT MODULES ↓": "瀏覽作品模組 ↓", "LOADED MODULES / 03": "已載入模組 / 03", "01 / GAME DEVELOPMENT": "01 / 遊戲開發", "02 / 3D ART": "02 / 3D 美術", "03 / TECHNICAL ART": "03 / 技術美術", "Unreal · Unity · Gameplay": "Unreal · Unity · 遊戲機制", "Modeling · Rendering · Environment": "建模 · 渲染 · 場景", "Shaders · Tools · Interactive Design": "Shader · 工具 · 互動設計", "ABOUT / CREATOR PROFILE": "關於 / 創作者檔案", "↺ REPLAY INTRO": "↺ 重播開場", "INSERTING MEMORY UNIT...": "正在插入記憶卡…", "CARD DETECTED": "已偵測到記憶卡", "AUTHORIZATION CHECK": "正在驗證授權", "MEMORY UNIT: CONNECTED": "記憶卡：已連接", "CREATOR DATA: VERIFIED": "創作者資料：驗證通過", "BOOTING ARCHIVE": "正在啟動檔案庫", "READING CREATOR DATA": "正在讀取創作者資料", "SYSTEM MODULES: INITIALIZING": "系統模組：初始化中", "ACCESS PORT: ONLINE": "存取埠：已連線", "READING DATA...": "正在讀取資料…", "READING ARCHIVE": "正在讀取檔案庫", "INDEXING PROJECT MODULES": "正在建立作品模組索引", "GAME DEVELOPMENT: OK": "遊戲開發：完成", "3D ART: OK": "3D 美術：完成", "VERIFYING DATA": "正在驗證資料", "VISUAL ASSETS READY": "視覺資產已就緒", "TECHNICAL ART: OK": "技術美術：完成", "INTERACTIVE EXPERIMENTS: OK": "互動實驗：完成", "ARCHIVE READY": "檔案庫已就緒", "WELCOME TO ALLEN'S CREATIVE BASE": "歡迎來到 Allen 的創作基地", "ACCESS GRANTED": "已授權存取", "ALL MODULES LOADED": "所有模組載入完成", "ENTERING PORTFOLIO...": "正在進入作品集…", "RELEASE TO INSERT": "放開即可插入", "DRAG CARD TOWARD SLOT": "請將記憶卡拖向插槽", "TRY AGAIN — OR CLICK TO INSERT": "請重試，或直接點擊插入"};
+const original=new WeakMap();
+const staticTargets=['.overline','.brandline span:last-child','.screen-top span:first-child','.slotlabel','.serial','.card small','.footer','.home nav a','.hero .tag','.hero h2','.hero p','.hero .enterbutton','#projects .tag','.tile strong','.tile p','#replay','.lampbox'];
+function tr(v){if(language!=='zh')return v;return zh[v]??v}
+function trMixed(v){return v.split('\n').map(tr).join('\n')}
+function applyStatic(){for(const el of document.querySelectorAll(staticTargets.join(','))){if(!original.has(el))original.set(el,el.innerHTML);const raw=original.get(el);let output=raw;if(language==='en'){output=output.replace('這裡會放你的個人簡介、技能與專案經歷。','Your bio, skills, and project experience will appear here.').replace('*聯絡信箱目前為佔位文字，發布前必須替換。','*Contact email is a placeholder. Replace it before publishing.')}for(const [en,cn] of Object.entries(zh).sort((a,b)=>b[0].length-a[0].length)){if(en)output=output.split(en).join(language==='zh'?cn:en)}el.innerHTML=output;}document.documentElement.lang=language==='zh'?'zh-Hant':'en';for(const code of ['zh','en']){const button=$('lang-'+code);const selected=language===code;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));}$('skip').textContent=tr('SKIP INTRO →');$('sound').textContent=tr(sound?'SOUND: ON':'SOUND: OFF');}
+function setHint(v){lastHint=v;hint.textContent=tr(v)}
+const projectTranslations={projectFormat:['VR Animation','VR 動畫'],conceptNav:['2D Concept Sketches','2D 概念草圖'],rendersNav:['3D Environment Renders','3D 場景渲染'],processNav:['Production Process','製作過程'],conceptHeading:['01 / 2D Concept Sketches','01 / 2D 概念草圖'],rendersHeading:['02 / 3D Environment Renders','02 / 3D 場景渲染'],processHeading:['03 / Production Process','03 / 製作過程'],conceptEmptyTitle:['Concept Sketch Gallery','概念草圖展示區'],conceptEmptyText:['Reserved for original character, machinery, or environment concept sketches. The existing image of sketches on a workbench is a 3D scene render, not a source 2D sketch.','此區預留給角色、機械或場景的原始概念草圖。提供的工作桌照片包含草圖，但屬於 3D 場景渲染，因此暫不當成原始 2D 草圖展示。'],processEmptyTitle:['Production Breakdown','製作紀錄展示區'],processEmptyText:['Reserved for modeling progress, material breakdowns, wireframes, concept-to-final comparisons, and production notes. Add these when source material is available.','預留給建模過程、材質拆解、線框圖、概念到成品的比較，以及製作心得。等你提供素材後可直接加入。'],positionLabel:['POSITION','POSITION / 職位'],positionValue:['2D Concept Artist & 3D Environment Artist','2D 概念美術暨 3D 場景美術'],toolsLabel:['SOFTWARE','SOFTWARE / 製作工具'],videoSection:['PROJECT VIDEO','PROJECT VIDEO / 作品影片'],playVideo:['Play Project Video','播放作品影片'],videoHint:['If the embedded player is unavailable, watch on YouTube.','若影片無法顯示，可使用 YouTube 連結觀看。'],watchYoutube:['Watch on YouTube ↗','在 YouTube 觀看 ↗'],galleryKicker:['ARCHIVE / PROJECT FILES','檔案庫 / 專案資料'],galleryTitle:['3D Works','3D作品'],featuredLabel:['FEATURED PROJECT / 001','精選專案 / 001'],projectTitle:['My Time Machine','我的時光機'],roleShort:['Role / 2D Concept Art · 3D Environment Art','負責｜2D 概念美術 · 3D 場景美術'],openFile:['Open Project File ↗','開啟專案檔案 ↗'],futureNote:['New work will be added as complete project files, without discipline-based categories.','未來的作品將以獨立專案形式陸續加入，不依專業類型分類。'],back:['← Back to Projects','← 返回專案列表'],roleOne:['2D Concept Art','2D 概念美術'],roleTwo:['3D Environment Art','3D 場景美術'],coverCaption:['Project Key Visual','專案主視覺 / Key Visual'],myRole:['MY ROLE','MY ROLE / 我的職責'],roleHeading:['2D Concept Art / 3D Environment Art','2D 概念美術 / 3D 場景美術'],introCopy:['This page documents the complete visual development of My Time Machine through 2D concept sketches, 3D environment renders, and production records, tracing the time machine and its interior and exterior environments from initial ideas through construction.','本頁收錄《我的時光機》的完整視覺流程，包含 2D 概念草圖、3D 場景渲染，以及製作過程紀錄，呈現時光機與場景內與外部的發想到建構發展脈絡。'],gallerySection:['SCENE GALLERY','SCENE GALLERY / 場景展示'],captionFour:['Time Machine & Interior','時間機器與室內空間'],captionTwo:['Workbench & Environment Details','工作桌與場景細節'],captionFive:['Mechanical Controls & Instruments','機械結構與儀表設計'],captionThree:['Outdoor Environment & Atmosphere','戶外環境與氛圍'],captionSix:['Cockpit Details','操作艙場景細節'],captionSeven:['Narrative Scene & Lighting','敘事場景與光影']};
+function updateGallery(){document.querySelectorAll('[data-project-i18n]').forEach(el=>{const pair=projectTranslations[el.dataset.projectI18n];if(pair){if(el.id==='gallery-heading'&&language==='zh'){el.innerHTML='<span class="gallery-title-latin">3D</span>作品'}else{el.textContent=pair[language==='en'?0:1]}}});document.querySelectorAll('[data-cn][data-en]').forEach(el=>{el.textContent=el.dataset[language==='en'?'en':'cn']})}
+function launchProjectVideo(){
+ const shell=$('video-shell');if(!shell||shell.querySelector('iframe'))return;
+ if(location.protocol==='file:'){
+  shell.innerHTML='<div class="video-local-notice"><p>本機 file:// 模式可能導致 YouTube 錯誤 153。請使用 localhost 或部署到 GitHub Pages 測試嵌入播放。<br>Local file mode may trigger YouTube error 153; use localhost or GitHub Pages.</p><a href="https://www.youtube.com/watch?v=IxhhuJiFB_U" target="_blank" rel="noopener noreferrer">在 YouTube 觀看 / Watch on YouTube ↗</a></div>';
+  return;
+ }
+ const iframe=document.createElement('iframe');iframe.title='My Time Machine — project video';iframe.src='https://www.youtube.com/embed/IxhhuJiFB_U?autoplay=1&rel=0';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');iframe.setAttribute('allowfullscreen','');shell.replaceChildren(iframe);
+}
+$('video-launch').addEventListener('click',launchProjectVideo);
+function launchRobotVideo(){const shell=$('robot-video-shell');if(!shell||shell.querySelector('iframe'))return;if(location.protocol==='file:'){shell.innerHTML='<div class="video-local-notice"><p>請使用 localhost 或 GitHub Pages 播放嵌入影片。 / Use localhost or GitHub Pages to play embedded video.</p><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=OMTQ_LTU6BA&t=5s">在 YouTube 觀看 / Watch on YouTube ↗</a></div>';return;}const iframe=document.createElement('iframe');iframe.title='Robots In The Desert — project video';iframe.src='https://www.youtube.com/embed/OMTQ_LTU6BA?start=5&autoplay=1&rel=0';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');iframe.setAttribute('allowfullscreen','');shell.replaceChildren(iframe)}
+$('robot-video-launch').addEventListener('click',launchRobotVideo);
+function showProject(id='my-time-machine'){if($('home').hidden)return;const target=$(id);if(!target)return;$('edge-home').hidden=false;$('project-contact').hidden=false;$('home').classList.add('project-open');$('projects').hidden=true;$('my-time-machine').hidden=id!=='my-time-machine';$('project-002').hidden=id!=='project-002';$('project-003').hidden=id!=='project-003';$('project-004').hidden=id!=='project-004';window.scrollTo({top:0,behavior:'instant'});target.scrollIntoView({block:'start',behavior:'instant'})}
+function closeProject(){ $('edge-home').hidden=true;$('edge-home').classList.remove('is-visible');$('project-contact').hidden=true;$('home').classList.remove('project-open');$('my-time-machine').hidden=true;$('project-002').hidden=true;$('project-003').hidden=true;$('project-004').hidden=true;$('projects').hidden=false;requestAnimationFrame(()=>$('projects').scrollIntoView({block:'start',behavior:'instant'}))}
+/* Reveal the return-home arrow when pointer enters the left 880px (8x the original range) of a project page. */
+const edgeHome=$('edge-home');
+const edgePointer=e=>{
+  if(edgeHome.hidden||e.pointerType==='touch')return;
+  edgeHome.classList.toggle('is-visible',e.clientX<880);
+};
+document.addEventListener('pointermove',edgePointer,{passive:true});
+document.addEventListener('pointerleave',()=>{if(!edgeHome.matches(':focus-within'))edgeHome.classList.remove('is-visible')});
+edgeHome.addEventListener('click',e=>{
+  e.preventDefault();closeProject();
+  requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}));
+});
+// Smoothly glide to the chosen project section; honor reduced-motion settings.
+document.querySelectorAll('.project-subnav a[href^="#"]').forEach(link=>{
+  link.addEventListener('click',event=>{
+    const target=document.getElementById(link.getAttribute('href').slice(1));
+    if(!target)return;
+    event.preventDefault();
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});
+  });
+});
+$('open-project').addEventListener('click',e=>{e.preventDefault();showProject('my-time-machine')});$('open-project-2').addEventListener('click',e=>{e.preventDefault();showProject('project-002')});$('open-project-3').addEventListener('click',e=>{e.preventDefault();showProject('project-003')});$('open-project-4').addEventListener('click',e=>{e.preventDefault();showProject('project-004')});document.querySelectorAll('#back-projects,.detail-back-bottom').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();closeProject()}));
+function switchLanguage(){language=language==='zh'?'en':'zh';applyStatic();screen(lastScreen.code,lastScreen.title,lastScreen.subtitle,lastScreen.lines,lastScreen.progress);setHint(lastHint);updateGallery();}
+let lastHint='CLICK OR DRAG CARD TO INSERT';let lastScreen={code:'00-STANDBY',title:'SYSTEM OFFLINE',subtitle:'NO MEMORY CARD',lines:['INSERT AUTHORIZED MEMORY UNIT','AWAITING USER INPUT _'],progress:0};
+$('lang-zh').addEventListener('click',()=>{if(language!=='zh')switchLanguage()});$('lang-en').addEventListener('click',()=>{if(language!=='en')switchLanguage()});
+const timers=[];function later(fn,delay){const t=setTimeout(fn,delay);timers.push(t)}function clearTimers(){while(timers.length)clearTimeout(timers.pop())}function tone(freq=500,length=.09){if(!sound)return;try{audio??=new(window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),g=audio.createGain();o.type='square';o.frequency.value=freq;g.gain.value=.022;o.connect(g);g.connect(audio.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+length);o.stop(audio.currentTime+length)}catch(e){}}
+function screen(code,title,subtitle,lines,progress){lastScreen={code,title,subtitle,lines,progress};$('screen-code').textContent=tr(code);status.textContent=tr(title);sub.textContent=tr(subtitle);log.replaceChildren(...lines.map(x=>{const d=document.createElement('div');d.textContent='› '+tr(x);return d}));$('bar').style.width=progress+'%'}
+function impactFeedback(){
+  const machine=$('machine'),monitor=document.querySelector('.monitor');
+  machine.classList.remove('impact');monitor.classList.remove('flash');
+  void machine.offsetWidth;machine.classList.add('impact');monitor.classList.add('flash');
+  slot.classList.add('locked');tone(170,.045);later(()=>tone(460,.075),65);
+  if(navigator.vibrate)navigator.vibrate(35);
+  later(()=>{machine.classList.remove('impact');monitor.classList.remove('flash')},510);
+}
+function lightLamp(id){const lamp=$(id);lamp.classList.remove('on');lamp.classList.add('ok','pulse');later(()=>lamp.classList.remove('pulse'),1400)}
+function insert(){
+  if(started)return;started=true;phase='inserting';card.style.pointerEvents='none';
+  slot.classList.remove('target');card.classList.remove('magnetic');setHint('INSERTING MEMORY UNIT...');
+  const cr=card.getBoundingClientRect(),sr=slot.getBoundingClientRect();
+  const dx=sr.left+sr.width/2-(cr.left+cr.width/2),dy=sr.top+sr.height/2-(cr.top+cr.height/2);
+  // Phase 1: align with the actual center of the slot, leaving a little resistance.
+  card.style.transition='transform .40s cubic-bezier(.22,.75,.3,1)';
+  card.style.transform=`translate(${dx}px,${dy-12}px) scale(.42)`;tone(290,.07);
+  // Phase 2: engage the slot at its center, not above or below it.
+  later(()=>{card.style.transition='transform .12s cubic-bezier(.2,0,.1,1)';card.style.transform=`translate(${dx}px,${dy}px) scale(.27)`},420);
+  // Phase 3: visually feed the card *into* the narrow opening before hiding it.
+  later(()=>{card.style.transition='transform .14s cubic-bezier(.45,0,1,1),opacity .13s ease-in';card.style.transform=`translate(${dx}px,${dy}px) scale(.18,.025)`;card.style.opacity='0.45'},540);
+  later(()=>{
+    card.style.opacity='0';impactFeedback();lightLamp('pwr');
+    screen('01-DETECTED','CARD DETECTED','AUTHORIZATION CHECK',['MEMORY UNIT: CONNECTED','CREATOR DATA: VERIFIED'],12);
+  },690);
+  later(()=>{lightLamp('link');screen('02-BOOT','BOOTING ARCHIVE','READING CREATOR DATA',['SYSTEM MODULES: INITIALIZING','ACCESS PORT: ONLINE'],30);setHint('READING DATA...');tone(450,.08)},1080);
+  later(()=>{lightLamp('read');screen('03-INDEX','READING ARCHIVE','INDEXING PROJECT MODULES',['GAME DEVELOPMENT: OK','3D ART: OK'],59);tone(550,.07)},1760);
+  later(()=>{screen('04-VERIFY','VERIFYING DATA','VISUAL ASSETS READY',['TECHNICAL ART: OK','INTERACTIVE EXPERIMENTS: OK'],87);tone(620,.07)},2430);
+  later(()=>{screen('05-READY',"WELCOME TO ALLEN'S CREATIVE BASE",'ACCESS GRANTED',['ALL MODULES LOADED','ENTERING PORTFOLIO...'],100);tone(800,.2);setHint("WELCOME TO ALLEN'S CREATIVE BASE")},3100);
+  later(enter,4050);
+}
+function enter(){
+  if(phase==='home'||phase==='transition')return;
+  clearTimers();phase='transition';$('skip').hidden=true;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){finishEnter(true);return;}
+  $('intro').classList.add('intro-fading');
+  later(()=>finishEnter(false),740);
+}
+function finishEnter(reduced){
+  if(phase!=='transition')return;
+  $('intro').hidden=true;
+  $('home').hidden=false;
+  $('home').classList.remove('home-visible','title-visible');
+  window.scrollTo(0,0);
+  void $('home').offsetWidth;
+  $('home').classList.add('home-visible');
+  if(reduced){$('home').classList.add('title-visible');}
+  else later(()=>$('home').classList.add('title-visible'),210);
+  phase='home';
+}function reset(){ $('edge-home').hidden=true;$('edge-home').classList.remove('is-visible');$('project-contact').hidden=true;$('project-002').hidden=true;$('project-004').hidden=true;$('home').classList.remove('project-open');$('my-time-machine').hidden=true;$('projects').hidden=false;clearTimers();$('intro').classList.remove('intro-fading');$('home').classList.remove('home-visible','title-visible');started=false;phase='idle';pointer=null;origin=null;$('intro').hidden=false;$('home').hidden=true;$('skip').hidden=false;card.style='';slot.classList.remove('target','locked');card.classList.remove('magnetic');$('machine').classList.remove('impact');document.querySelector('.monitor').classList.remove('flash');$('pwr').className='lamp on';$('link').className='lamp';$('read').className='lamp';screen('00-STANDBY','SYSTEM OFFLINE','NO MEMORY CARD',['INSERT AUTHORIZED MEMORY UNIT','AWAITING USER INPUT _'],0);setHint('CLICK OR DRAG CARD TO INSERT');window.scrollTo({top:0,behavior:'instant'})}
+card.addEventListener('pointerdown',e=>{if(started)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY,dx:0,dy:0,moved:false};card.setPointerCapture(e.pointerId);card.classList.add('dragging')});card.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId||started)return;pointer.dx=e.clientX-pointer.x;pointer.dy=e.clientY-pointer.y;if(Math.hypot(pointer.dx,pointer.dy)>7)pointer.moved=true;if(pointer.moved){card.style.transform=`translate(${pointer.dx}px,${pointer.dy}px)`;const cr=card.getBoundingClientRect(),sr=slot.getBoundingClientRect();const gap=Math.hypot(cr.left+cr.width/2-(sr.left+sr.width/2),cr.top+cr.height/2-(sr.top+sr.height/2));slot.classList.toggle('target',gap<170);card.classList.toggle('magnetic',gap<170);if(gap<170){const pull=(170-gap)/170*.25;card.style.transform=`translate(${pointer.dx+((sr.left+sr.width/2)-(cr.left+cr.width/2))*pull}px,${pointer.dy+((sr.top+sr.height/2)-(cr.top+cr.height/2))*pull}px)`}hint.textContent=gap<170?tr('RELEASE TO INSERT'):tr('DRAG CARD TOWARD SLOT')}});card.addEventListener('pointerup',e=>{if(!pointer||pointer.id!==e.pointerId)return;const moved=pointer.moved;pointer=null;card.classList.remove('dragging');if(!moved){insert();return}const cr=card.getBoundingClientRect(),sr=slot.getBoundingClientRect();const gap=Math.hypot(cr.left+cr.width/2-(sr.left+sr.width/2),cr.top+cr.height/2-(sr.top+sr.height/2));if(gap<170)insert();else{card.style.transition='transform .3s ease';card.style.transform='';slot.classList.remove('target');card.classList.remove('magnetic');setHint('TRY AGAIN — OR CLICK TO INSERT')}});card.addEventListener('pointercancel',()=>{pointer=null;card.style.transform='';card.classList.remove('dragging');slot.classList.remove('target');card.classList.remove('magnetic')});card.addEventListener('click',e=>{if(e.detail===0&&!started)insert()});$('skip').addEventListener('click',enter);$('replay').addEventListener('click',reset);$('sound').addEventListener('click',()=>{sound=!sound;$('sound').textContent=tr(sound?'SOUND: ON':'SOUND: OFF');$('sound').setAttribute('aria-pressed',String(sound));if(sound)tone(520,.08)});applyStatic();updateGallery();reset();})();
+</script><script>
+/* Header activates only once the intro is dismissed. */
+(function(){
+ const home=document.getElementById('home'),menu=document.getElementById('site-menu'),toggle=document.getElementById('menu-toggle');
+ const headerLang=document.getElementById('header-lang'),originalTop=document.querySelector('.top');
+ const languageSwitch=originalTop.querySelector('.language-switch'),soundButton=document.getElementById('sound');
+ function placeControls(inHeader){
+   const parent=inHeader?headerLang:originalTop;
+   // Append in the requested order: Sound / 繁中 / English.
+   if(soundButton.parentElement!==parent)parent.appendChild(soundButton);
+   if(languageSwitch.parentElement!==parent)parent.appendChild(languageSwitch);
+   if(!inHeader){originalTop.insertBefore(languageSwitch,soundButton);}
+ }
+
+ function sync(){const ready=!home.hidden;placeControls(ready);document.body.classList.toggle('site-ready',ready);if(!ready)close();}
+ function close(){menu.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');}
+ function go(id){
+   if(home.hidden)return;
+   if(['my-time-machine','project-002','project-003','project-004'].includes(id)){
+     const opener={'my-time-machine':'open-project','project-002':'open-project-2','project-003':'open-project-3','project-004':'open-project-4'}[id];
+     document.getElementById(opener)?.click();
+   }else{
+     if(home.classList.contains('project-open'))document.querySelector('#edge-home')?.click();
+     requestAnimationFrame(()=>requestAnimationFrame(()=>{
+       const target=id==='projects'?document.getElementById('projects'):document.getElementById(id);
+       if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+     }));
+   }
+ }
+ toggle.addEventListener('click',()=>{const open=!menu.classList.contains('is-open');menu.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));});
+ document.getElementById('site-brand').addEventListener('click',e=>{e.preventDefault();close();go('projects');});
+ menu.querySelectorAll('a[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();close();go(a.dataset.go);}));
+ document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!toggle.contains(e.target))close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+ const observer=new MutationObserver(sync);observer.observe(home,{attributes:true,attributeFilter:['hidden']});sync();
+ const langs=document.querySelectorAll('#lang-zh,#lang-en');
+ const refresh=()=>{const en=document.documentElement.lang==='en';document.getElementById('menu-label').textContent=en?'Menu':'選單';menu.querySelectorAll('[data-cn]').forEach(el=>{el.textContent=el.getAttribute(en?'data-en':'data-cn');});};
+ langs.forEach(el=>el.addEventListener('click',()=>setTimeout(refresh,0)));refresh();
+})();
+</script>
+<script>
+/* In-page illustration lightbox and optional multi-image sequence. */
+(function(){
+ const lightbox=document.getElementById('illustration-lightbox');if(!lightbox)return;
+ const image=document.getElementById('illustration-lightbox-image');
+ const title=document.getElementById('illustration-lightbox-title');
+ const index=document.getElementById('illustration-lightbox-index');
+ const closeBtn=document.getElementById('illustration-lightbox-close');
+ const prev=document.getElementById('illustration-prev');
+ const next=document.getElementById('illustration-next');
+ const counter=document.getElementById('illustration-slide-counter');
+ const buttons=[...document.querySelectorAll('.illustration-open')];
+ let lastTrigger=null,slides=[],slide=0,fadeTimer=0,swapTimer=0;
+ const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+ function label(btn){title.textContent=btn.dataset[document.documentElement.lang==='en'?'titleEn':'titleCn']||btn.dataset.titleCn||'Artwork';}
+ function showSlide(n,animate){
+   if(!slides.length)return;
+   slide=(n+slides.length)%slides.length;
+   const source=slides[slide];
+   const apply=()=>{image.src=source;image.alt=slides.length>1?`${lastTrigger.querySelector('img')?.alt||'Artwork'} — ${slide+1} / ${slides.length}`:(lastTrigger.querySelector('img')?.alt||'Artwork');counter.textContent=`${String(slide+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}`;};
+   clearTimeout(fadeTimer);clearTimeout(swapTimer);
+   if(animate&&!prefersReducedMotion.matches){image.classList.add('is-transitioning');swapTimer=setTimeout(()=>{apply();fadeTimer=setTimeout(()=>image.classList.remove('is-transitioning'),35);},280);}
+   else{image.classList.remove('is-transitioning');apply();}
+ }
+ function open(btn){
+   lastTrigger=btn;slides=(btn.dataset.slides||btn.dataset.full).split('|');slide=0;
+   const multi=slides.length>1;prev.hidden=next.hidden=counter.hidden=!multi;
+   label(btn);index.textContent=btn.dataset.index||'';
+   lightbox.hidden=false;lightbox.setAttribute('aria-hidden','false');lightbox.classList.add('is-open');
+   document.body.classList.add('lightbox-open');showSlide(0,false);closeBtn.focus({preventScroll:true});
+ }
+ function close(){
+   clearTimeout(fadeTimer);clearTimeout(swapTimer);image.classList.remove('is-transitioning');
+   lightbox.classList.remove('is-open');lightbox.setAttribute('aria-hidden','true');lightbox.hidden=true;
+   image.removeAttribute('src');document.body.classList.remove('lightbox-open');lastTrigger?.focus({preventScroll:true});
+ }
+ buttons.forEach(btn=>btn.addEventListener('click',()=>open(btn)));
+ prev.addEventListener('click',()=>showSlide(slide-1,true));next.addEventListener('click',()=>showSlide(slide+1,true));
+ lightbox.addEventListener('click',e=>{if(e.target===lightbox||e.target.hasAttribute('data-close-lightbox'))close();});
+ closeBtn.addEventListener('click',close);
+ document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('is-open'))return;if(e.key==='Escape')close();else if(e.key==='ArrowRight'&&slides.length>1){e.preventDefault();showSlide(slide+1,true)}else if(e.key==='ArrowLeft'&&slides.length>1){e.preventDefault();showSlide(slide-1,true)}});
+ document.querySelectorAll('#lang-zh,#lang-en').forEach(btn=>btn.addEventListener('click',()=>{if(lightbox.classList.contains('is-open')&&lastTrigger)requestAnimationFrame(()=>label(lastTrigger));}));
+})();
+</script>
+<script>
+/* Homepage browse-works dropdown; uses existing section anchors. */
+(function(){
+ const wrap=document.getElementById('browse-works');
+ const toggle=document.getElementById('browse-toggle');
+ const options=document.getElementById('browse-options');
+ if(!wrap||!toggle||!options)return;
+ function close(){options.hidden=true;toggle.setAttribute('aria-expanded','false')}
+ toggle.addEventListener('click',()=>{const open=options.hidden;options.hidden=!open;toggle.setAttribute('aria-expanded',String(open))});
+ options.querySelectorAll('a').forEach(link=>link.addEventListener('click',e=>{
+   e.preventDefault();close();
+   const target=document.querySelector(link.getAttribute('href'));
+   if(target)target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+ }));
+ document.addEventListener('click',e=>{if(!wrap.contains(e.target))close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!options.hidden){close();toggle.focus()}});
+})();
+</script></body></html>
